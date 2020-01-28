@@ -1,0 +1,13 @@
+&shr_strdata_nml
+ datamode = 'CLMNCEP'
+ domainfile = '/storage/projects/inputdata/share/domains/domain.clm/domain.lnd.1x1pt_US-Brw_navy.nc'
+ dtlimit = 1.5,1.5
+ fillalgo = 'nn','nn'
+ fillmask = 'nomask','nomask'
+ mapalgo = 'nn','nn'
+ mapmask = 'nomask','nomask'
+ streams = "datm.streams.txt.CLM1PT.CLM_USRDAT 1 2000 2010", "datm.streams.txt.presaero.clim_1850 1 1 1"
+ taxmode = 'extend','extend'
+ tintalgo = 'nearest','linear'
+ vectors = 'null'
+/

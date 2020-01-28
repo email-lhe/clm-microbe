@@ -1,0 +1,51 @@
+&clm_inparm
+ albice = 0.60,0.40
+ co2_ppmv = 284.7
+ co2_type = 'constant'
+ create_crop_landunit = .false.
+ dtime = 1800
+ fatmlndfrc = '/storage/projects/inputdata/share/domains/domain.clm/domain.lnd.1x1pt_US-Brw_navy.nc'
+ finidat = ' '
+ fpftcon = '/storage/lhe/clm-microbe/scripts/test/pft-physiology.c130801.NGEE.nc'
+ fsnowaging = '/storage/projects/inputdata/lnd/clm2/snicardata/snicar_drdt_bst_fit_60_c070416.nc'
+ fsnowoptics = '/storage/projects/inputdata/lnd/clm2/snicardata/snicar_optics_5bnd_c090915.nc'
+ fsurdat = '/storage/projects/inputdata/lnd/clm2/surfdata_map/surfdata_1x1pt_NGEE_US-Brw_I20TRCLM45CN_simyr1850.nc'
+ hist_mfilt = 365
+ hist_nhtfrq = -24
+ maxpatch_glcmec = 0
+ more_vertlayers = .false.
+ nsegspc = 20
+ spinup_state = 1
+ urban_hac = 'ON'
+ urban_traffic = .false.
+/
+&ndepdyn_nml
+ ndepmapalgo = 'bilinear'
+ stream_fldfilename_ndep = '/storage/projects/inputdata/lnd/clm2/ndepdata/fndep_clm_hist_simyr1849-2006_1.9x2.5_c100428.nc'
+ stream_year_first_ndep = 1850
+ stream_year_last_ndep = 1850
+/
+&popd_streams
+ popdensmapalgo = 'bilinear'
+ stream_fldfilename_popdens = '/storage/projects/inputdata/lnd/clm2/firedata/clmforc.Li_2012_hdm_0.5x0.5_AVHRR_simyr1850-2010_c130401.nc'
+ stream_year_first_popdens = 1850
+ stream_year_last_popdens = 1850
+/
+&light_streams
+ lightngmapalgo = 'bilinear'
+ stream_fldfilename_lightng = '/storage/projects/inputdata/atm/datm7/NASA_LIS/clmforc.Li_2012_climo1995-2011.T62.lnfm_c130327.nc'
+ stream_year_first_lightng = 0001
+ stream_year_last_lightng = 0001
+/
+&clm_hydrology1_inparm
+/
+&clm_soilhydrology_inparm
+/
+&microbepar_in
+/
+#!--------------------------------------------------------------------------------------------------------------------------
+#! lnd_in:: Comment:
+#! This namelist was created using the following command-line:
+#!     /mnt/storage/lhe/clm-microbe/models/lnd/clm/bld/CLM build-namelist -infile /mnt/storage/lhe/clm-microbe/scripts/test/Buildconf/clmconf/cesm_namelist -csmdata /storage/projects/inputdata -inputdata /mnt/storage/lhe/clm-microbe/scripts/test/Buildconf/clm.input_data_list -ignore_ic_year -namelist &clm_inparm start_ymd = 00010101  / -use_case 1850_control -res 1x1pt_US-Brw -clm_usr_name 1x1pt_US-Brw -clm_start_type cold -l_ncpl 48 -lnd_frac /storage/projects/inputdata/share/domains/domain.clm/domain.lnd.1x1pt_US-Brw_navy.nc -glc_nec 0 -co2_ppmv 284.7 -co2_type constant -config /mnt/storage/lhe/clm-microbe/scripts/test/Buildconf/clmconf/config_cache.xml -mask navy -bgc_spinup on
+#! For help on options use: /mnt/storage/lhe/clm-microbe/models/lnd/clm/bld/CLM build-namelist -help
+#!--------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,1574 @@
+netcdf surfdata_1x1pt_Sanjiang_CN-SJ1_I1850CLM45CN_simyr1850 {
+dimensions:
+	numrad = 2 ;
+	numurbl = 3 ;
+	lsmlat = 1 ;
+	lsmlon = 1 ;
+	nlevurb = 5 ;
+	nglcecp1 = 11 ;
+	time = UNLIMITED ; // (12 currently)
+	lsmpft = 17 ;
+	nlevsoi = 10 ;
+	nglcec = 10 ;
+variables:
+	double ALB_IMPROAD_DIF(numrad, numurbl, lsmlat, lsmlon) ;
+		ALB_IMPROAD_DIF:long_name = "diffuse albedo of impervious road" ;
+		ALB_IMPROAD_DIF:units = "unitless" ;
+	double ALB_IMPROAD_DIR(numrad, numurbl, lsmlat, lsmlon) ;
+		ALB_IMPROAD_DIR:long_name = "direct albedo of impervious road" ;
+		ALB_IMPROAD_DIR:units = "unitless" ;
+	double ALB_PERROAD_DIF(numrad, numurbl, lsmlat, lsmlon) ;
+		ALB_PERROAD_DIF:long_name = "diffuse albedo of pervious road" ;
+		ALB_PERROAD_DIF:units = "unitless" ;
+	double ALB_PERROAD_DIR(numrad, numurbl, lsmlat, lsmlon) ;
+		ALB_PERROAD_DIR:long_name = "direct albedo of pervious road" ;
+		ALB_PERROAD_DIR:units = "unitless" ;
+	double ALB_ROOF_DIF(numrad, numurbl, lsmlat, lsmlon) ;
+		ALB_ROOF_DIF:long_name = "diffuse albedo of roof" ;
+		ALB_ROOF_DIF:units = "unitless" ;
+	double ALB_ROOF_DIR(numrad, numurbl, lsmlat, lsmlon) ;
+		ALB_ROOF_DIR:long_name = "direct albedo of roof" ;
+		ALB_ROOF_DIR:units = "unitless" ;
+	double ALB_WALL_DIF(numrad, numurbl, lsmlat, lsmlon) ;
+		ALB_WALL_DIF:long_name = "diffuse albedo of wall" ;
+		ALB_WALL_DIF:units = "unitless" ;
+	double ALB_WALL_DIR(numrad, numurbl, lsmlat, lsmlon) ;
+		ALB_WALL_DIR:long_name = "direct albedo of wall" ;
+		ALB_WALL_DIR:units = "unitless" ;
+	double AREA(lsmlat, lsmlon) ;
+		AREA:long_name = "area" ;
+		AREA:units = "km^2" ;
+	double CANYON_HWR(numurbl, lsmlat, lsmlon) ;
+		CANYON_HWR:long_name = "canyon height to width ratio" ;
+		CANYON_HWR:units = "unitless" ;
+	double CV_IMPROAD(nlevurb, numurbl, lsmlat, lsmlon) ;
+		CV_IMPROAD:long_name = "volumetric heat capacity of impervious road" ;
+		CV_IMPROAD:units = "J/m^3*K" ;
+	double CV_ROOF(nlevurb, numurbl, lsmlat, lsmlon) ;
+		CV_ROOF:long_name = "volumetric heat capacity of roof" ;
+		CV_ROOF:units = "J/m^3*K" ;
+	double CV_WALL(nlevurb, numurbl, lsmlat, lsmlon) ;
+		CV_WALL:long_name = "volumetric heat capacity of wall" ;
+		CV_WALL:units = "J/m^3*K" ;
+	double Ds(lsmlat, lsmlon) ;
+		Ds:long_name = "VIC Ds parameter for the ARNO curve" ;
+		Ds:units = "unitless" ;
+	double Dsmax(lsmlat, lsmlon) ;
+		Dsmax:long_name = "VIC Dsmax parameter for the ARNO curve" ;
+		Dsmax:units = "mm/day" ;
+	double EF1_BTR(lsmlat, lsmlon) ;
+		EF1_BTR:long_name = "EF btr (isoprene)" ;
+		EF1_BTR:units = "unitless" ;
+	double EF1_CRP(lsmlat, lsmlon) ;
+		EF1_CRP:long_name = "EF crp (isoprene)" ;
+		EF1_CRP:units = "unitless" ;
+	double EF1_FDT(lsmlat, lsmlon) ;
+		EF1_FDT:long_name = "EF fdt (isoprene)" ;
+		EF1_FDT:units = "unitless" ;
+	double EF1_FET(lsmlat, lsmlon) ;
+		EF1_FET:long_name = "EF fet (isoprene)" ;
+		EF1_FET:units = "unitless" ;
+	double EF1_GRS(lsmlat, lsmlon) ;
+		EF1_GRS:long_name = "EF grs (isoprene)" ;
+		EF1_GRS:units = "unitless" ;
+	double EF1_SHR(lsmlat, lsmlon) ;
+		EF1_SHR:long_name = "EF shr (isoprene)" ;
+		EF1_SHR:units = "unitless" ;
+	double EM_IMPROAD(numurbl, lsmlat, lsmlon) ;
+		EM_IMPROAD:long_name = "emissivity of impervious road" ;
+		EM_IMPROAD:units = "unitless" ;
+	double EM_PERROAD(numurbl, lsmlat, lsmlon) ;
+		EM_PERROAD:long_name = "emissivity of pervious road" ;
+		EM_PERROAD:units = "unitless" ;
+	double EM_ROOF(numurbl, lsmlat, lsmlon) ;
+		EM_ROOF:long_name = "emissivity of roof" ;
+		EM_ROOF:units = "unitless" ;
+	double EM_WALL(numurbl, lsmlat, lsmlon) ;
+		EM_WALL:long_name = "emissivity of wall" ;
+		EM_WALL:units = "unitless" ;
+	double F0(lsmlat, lsmlon) ;
+		F0:long_name = "maximum gridcell fractional inundated area" ;
+		F0:units = "unitless" ;
+	double FMAX(lsmlat, lsmlon) ;
+		FMAX:long_name = "maximum fractional saturated area" ;
+		FMAX:units = "unitless" ;
+	double GLC_MEC(nglcecp1) ;
+		GLC_MEC:long_name = "Glacier elevation class" ;
+		GLC_MEC:units = "m" ;
+	double HT_ROOF(numurbl, lsmlat, lsmlon) ;
+		HT_ROOF:long_name = "height of roof" ;
+		HT_ROOF:units = "meters" ;
+	double LAKEDEPTH(lsmlat, lsmlon) ;
+		LAKEDEPTH:long_name = "lake depth" ;
+		LAKEDEPTH:units = "m" ;
+	double LANDFRAC_PFT(lsmlat, lsmlon) ;
+		LANDFRAC_PFT:long_name = "land fraction from pft dataset" ;
+		LANDFRAC_PFT:units = "unitless" ;
+	double LATIXY(lsmlat, lsmlon) ;
+		LATIXY:long_name = "latitude" ;
+		LATIXY:units = "degrees north" ;
+	double LONGXY(lsmlat, lsmlon) ;
+		LONGXY:long_name = "longitude" ;
+		LONGXY:units = "degrees east" ;
+	double MONTHLY_HEIGHT_BOT(time, lsmpft, lsmlat, lsmlon) ;
+		MONTHLY_HEIGHT_BOT:long_name = "monthly height bottom" ;
+		MONTHLY_HEIGHT_BOT:units = "meters" ;
+	double MONTHLY_HEIGHT_TOP(time, lsmpft, lsmlat, lsmlon) ;
+		MONTHLY_HEIGHT_TOP:long_name = "monthly height top" ;
+		MONTHLY_HEIGHT_TOP:units = "meters" ;
+	double MONTHLY_LAI(time, lsmpft, lsmlat, lsmlon) ;
+		MONTHLY_LAI:long_name = "monthly leaf area index" ;
+		MONTHLY_LAI:units = "unitless" ;
+	double MONTHLY_SAI(time, lsmpft, lsmlat, lsmlon) ;
+		MONTHLY_SAI:long_name = "monthly stem area index" ;
+		MONTHLY_SAI:units = "unitless" ;
+	int NLEV_IMPROAD(numurbl, lsmlat, lsmlon) ;
+		NLEV_IMPROAD:long_name = "number of impervious road layers" ;
+		NLEV_IMPROAD:units = "unitless" ;
+	double ORGANIC(nlevsoi, lsmlat, lsmlon) ;
+		ORGANIC:long_name = "organic matter density at soil levels" ;
+		ORGANIC:units = "kg/m3 (assumed carbon content 0.58 gC per gOM)" ;
+	double P3(lsmlat, lsmlon) ;
+		P3:long_name = "coefficient for qflx_surf_lag for finundated" ;
+		P3:units = "s/mm" ;
+	double PCT_CLAY(nlevsoi, lsmlat, lsmlon) ;
+		PCT_CLAY:long_name = "percent clay" ;
+		PCT_CLAY:units = "unitless" ;
+	double PCT_GLACIER(lsmlat, lsmlon) ;
+		PCT_GLACIER:long_name = "percent glacier" ;
+		PCT_GLACIER:units = "unitless" ;
+	double PCT_GLC_GIC(lsmlat, lsmlon) ;
+		PCT_GLC_GIC:long_name = "percent ice caps/glaciers" ;
+		PCT_GLC_GIC:units = "unitless" ;
+	double PCT_GLC_ICESHEET(lsmlat, lsmlon) ;
+		PCT_GLC_ICESHEET:long_name = "percent ice sheet" ;
+		PCT_GLC_ICESHEET:units = "unitless" ;
+	double PCT_GLC_MEC(nglcec, lsmlat, lsmlon) ;
+		PCT_GLC_MEC:long_name = "percent glacier for each glacier elevation class" ;
+		PCT_GLC_MEC:units = "unitless" ;
+	double PCT_GLC_MEC_GIC(nglcec, lsmlat, lsmlon) ;
+		PCT_GLC_MEC_GIC:long_name = "percent smaller glaciers and ice caps for each glacier elevation class" ;
+		PCT_GLC_MEC_GIC:units = "unitless" ;
+	double PCT_GLC_MEC_ICESHEET(nglcec, lsmlat, lsmlon) ;
+		PCT_GLC_MEC_ICESHEET:long_name = "percent ice sheet for each glacier elevation class" ;
+		PCT_GLC_MEC_ICESHEET:units = "unitless" ;
+	double PCT_LAKE(lsmlat, lsmlon) ;
+		PCT_LAKE:long_name = "percent lake" ;
+		PCT_LAKE:units = "unitless" ;
+	double PCT_PFT(lsmpft, lsmlat, lsmlon) ;
+		PCT_PFT:long_name = "percent plant functional type of gridcell" ;
+		PCT_PFT:units = "unitless" ;
+	double PCT_SAND(nlevsoi, lsmlat, lsmlon) ;
+		PCT_SAND:long_name = "percent sand" ;
+		PCT_SAND:units = "unitless" ;
+	double PCT_URBAN(numurbl, lsmlat, lsmlon) ;
+		PCT_URBAN:long_name = "percent urban for each density type" ;
+		PCT_URBAN:units = "unitless" ;
+	double PCT_WETLAND(lsmlat, lsmlon) ;
+		PCT_WETLAND:long_name = "percent wetland" ;
+		PCT_WETLAND:units = "unitless" ;
+	int PFTDATA_MASK(lsmlat, lsmlon) ;
+		PFTDATA_MASK:long_name = "land mask from pft dataset, indicative of real/fake points" ;
+		PFTDATA_MASK:units = "unitless" ;
+	double SLOPE(lsmlat, lsmlon) ;
+		SLOPE:long_name = "mean topographic slope" ;
+		SLOPE:units = "degrees" ;
+	int SOIL_COLOR(lsmlat, lsmlon) ;
+		SOIL_COLOR:long_name = "soil color" ;
+		SOIL_COLOR:units = "unitless" ;
+	double STD_ELEV(lsmlat, lsmlon) ;
+		STD_ELEV:long_name = "standard deviation of elevation" ;
+		STD_ELEV:units = "m" ;
+	double THICK_ROOF(numurbl, lsmlat, lsmlon) ;
+		THICK_ROOF:long_name = "thickness of roof" ;
+		THICK_ROOF:units = "meters" ;
+	double THICK_WALL(numurbl, lsmlat, lsmlon) ;
+		THICK_WALL:long_name = "thickness of wall" ;
+		THICK_WALL:units = "meters" ;
+	double TK_IMPROAD(nlevurb, numurbl, lsmlat, lsmlon) ;
+		TK_IMPROAD:long_name = "thermal conductivity of impervious road" ;
+		TK_IMPROAD:units = "W/m*K" ;
+	double TK_ROOF(nlevurb, numurbl, lsmlat, lsmlon) ;
+		TK_ROOF:long_name = "thermal conductivity of roof" ;
+		TK_ROOF:units = "W/m*K" ;
+	double TK_WALL(nlevurb, numurbl, lsmlat, lsmlon) ;
+		TK_WALL:long_name = "thermal conductivity of wall" ;
+		TK_WALL:units = "W/m*K" ;
+	double TOPO(lsmlat, lsmlon) ;
+		TOPO:long_name = "mean elevation on land" ;
+		TOPO:units = "m" ;
+	double TOPO_GLC_MEC(nglcec, lsmlat, lsmlon) ;
+		TOPO_GLC_MEC:long_name = "mean elevation on glacier elevation classes" ;
+		TOPO_GLC_MEC:units = "m" ;
+	double T_BUILDING_MAX(numurbl, lsmlat, lsmlon) ;
+		T_BUILDING_MAX:long_name = "maximum interior building temperature" ;
+		T_BUILDING_MAX:units = "K" ;
+	double T_BUILDING_MIN(numurbl, lsmlat, lsmlon) ;
+		T_BUILDING_MIN:long_name = "minimum interior building temperature" ;
+		T_BUILDING_MIN:units = "K" ;
+	int URBAN_REGION_ID(lsmlat, lsmlon) ;
+		URBAN_REGION_ID:long_name = "urban region ID" ;
+		URBAN_REGION_ID:units = "unitless" ;
+	double WIND_HGT_CANYON(numurbl, lsmlat, lsmlon) ;
+		WIND_HGT_CANYON:long_name = "height of wind in canyon" ;
+		WIND_HGT_CANYON:units = "meters" ;
+	double WTLUNIT_ROOF(numurbl, lsmlat, lsmlon) ;
+		WTLUNIT_ROOF:long_name = "fraction of roof" ;
+		WTLUNIT_ROOF:units = "unitless" ;
+	double WTROAD_PERV(numurbl, lsmlat, lsmlon) ;
+		WTROAD_PERV:long_name = "fraction of pervious road" ;
+		WTROAD_PERV:units = "unitless" ;
+	double Ws(lsmlat, lsmlon) ;
+		Ws:long_name = "VIC Ws parameter for the ARNO Curve" ;
+		Ws:units = "unitless" ;
+	double ZWT0(lsmlat, lsmlon) ;
+		ZWT0:long_name = "decay factor for finundated" ;
+		ZWT0:units = "m" ;
+	int abm(lsmlat, lsmlon) ;
+		abm:long_name = "agricultural fire peak month" ;
+		abm:units = "unitless" ;
+	double binfl(lsmlat, lsmlon) ;
+		binfl:long_name = "VIC b parameter for the Variable Infiltration Capacity Curve" ;
+		binfl:units = "unitless" ;
+	double gdp(lsmlat, lsmlon) ;
+		gdp:long_name = "gdp" ;
+		gdp:units = "unitless" ;
+	int mxsoil_color ;
+		mxsoil_color:long_name = "maximum numbers of soil colors" ;
+		mxsoil_color:units = "unitless" ;
+	double peatf(lsmlat, lsmlon) ;
+		peatf:long_name = "peatland fraction" ;
+		peatf:units = "unitless" ;
+	int time(time) ;
+		time:long_name = "Calendar month" ;
+		time:units = "month" ;
+
+// global attributes:
+		:Conventions = "NCAR-CSM" ;
+		:History_Log = "created on: 04-15-13 15:48:34" ;
+		:Logname = "sacks" ;
+		:Host = "yslogin6" ;
+		:Source = "Community Land Model: CLM4" ;
+		:Version = "$HeadURL: https://svn-ccsm-models.cgd.ucar.edu/clm2/trunk_tags/clm4_0_73/models/lnd/clm/tools/clm4_5/mksurfdata_map/src/mkfileMod.F90 $" ;
+		:Revision_Id = "$Id: mkfileMod.F90 46006 2013-04-15 16:04:42Z sacks $" ;
+		:Compiler_Optimized = "TRUE" ;
+		:no_inlandwet = "TRUE" ;
+		:nglcec = 10 ;
+		:Input_grid_dataset = "map_0.5x0.5_MODIS_to_360x720_nomask_aave_da_c120830.nc" ;
+		:Input_gridtype = "global" ;
+		:VOC_EF_raw_data_file_name = "mksrf_vocef_0.5x0.5_simyr2000.c110531.nc" ;
+		:Inland_lake_raw_data_file_name = "mksrf_LakePnDepth_3x3min_simyr2004_c111116.nc" ;
+		:Inland_wetland_raw_data_file_name = "mksrf_lanwat.050425.nc" ;
+		:Glacier_raw_data_file_name = "mksrf_glacier_3x3min_simyr2000.c120926.nc" ;
+		:Urban_Topography_raw_data_file_name = "mksrf_topo.10min.c080912.nc" ;
+		:Land_Topography_raw_data_file_name = "topodata_10min_USGS_071205.nc" ;
+		:Urban_raw_data_file_name = "mksrf_urban_0.05x0.05_simyr2000.c120621.nc" ;
+		:Lai_raw_data_file_name = "mksrf_lai_global_c090506.nc" ;
+		:agfirepkmon_raw_data_file_name = "mksrf_abm_0.5x0.5_AVHRR_simyr2000.c130201.nc" ;
+		:gdp_raw_data_file_name = "mksrf_gdp_0.5x0.5_AVHRR_simyr2000.c130228.nc" ;
+		:peatland_raw_data_file_name = "mksrf_peatf_0.5x0.5_AVHRR_simyr2000.c130228.nc" ;
+		:topography_stats_raw_data_file_name = "mksrf_topostats_1km-merge-10min_HYDRO1K-merge-nomask_simyr2000.c130402.nc" ;
+		:vic_raw_data_file_name = "mksrf_vic_0.9x1.25_GRDC_simyr2000.c130307.nc" ;
+		:ch4_params_raw_data_file_name = "mksrf_ch4inversion_360x720_cruncep_simyr2000.c130322.nc" ;
+		:map_pft_file_name = "map_0.5x0.5_MODIS_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_lakwat_file = "map_3x3min_MODIS_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_wetlnd_file = "map_0.5x0.5_AVHRR_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_glacier_file = "map_3x3min_GLOBE-Gardner_to_360x720_nomask_aave_da_c121128.nc" ;
+		:map_soil_texture_file = "map_5x5min_IGBP-GSDP_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_soil_color_file = "map_0.5x0.5_MODIS_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_soil_organic_file = "map_5x5min_ISRIC-WISE_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_urban_file = "map_3x3min_LandScan2004_to_360x720_nomask_aave_da_c121017.nc" ;
+		:map_fmax_file = "map_3x3min_USGS_to_360x720_nomask_aave_da_c121128.nc" ;
+		:map_VOC_EF_file = "map_0.5x0.5_AVHRR_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_harvest_file = "map_0.5x0.5_MODIS_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_lai_sai_file = "map_0.5x0.5_MODIS_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_urban_topography_file = "map_10x10min_nomask_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_land_topography_file = "map_10x10min_nomask_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_agfirepkmon_file = "map_0.5x0.5_AVHRR_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_gdp_file = "map_0.5x0.5_AVHRR_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_peatland_file = "map_0.5x0.5_AVHRR_to_360x720_nomask_aave_da_c120830.nc" ;
+		:map_topography_stats_file = "map_1km-merge-10min_HYDRO1K-merge-nomask_to_360x720_nomask_aave_da_c130403.nc" ;
+		:map_vic_file = "map_0.9x1.25_GRDC_to_360x720_nomask_aave_da_c130309.nc" ;
+		:map_ch4_params_file = "map_360x720_cruncep_to_360x720_nomask_aave_da_c130326.nc" ;
+		:Soil_texture_raw_data_file_name = "mksrf_soitex.10level.c010119.nc" ;
+		:Soil_color_raw_data_file_name = "mksrf_soilcol_global_c090324.nc" ;
+		:Fmax_raw_data_file_name = "mksrf_fmax_3x3min_USGS_c120911.nc" ;
+		:Organic_matter_raw_data_file_name = "mksrf_organic_10level_5x5min_ISRIC-WISE-NCSCD_nlev7_c120830.nc" ;
+		:Vegetation_type_raw_data_filename = "mksrf_landuse_rc1850_c090630.nc" ;
+		:history = "Tue Mar 27 21:16:30 2018: ncks -d lsmlon,267,267 -d lsmlat,275,275 /storage/projects/inputdata/lnd/clm2/surfdata/surfdata_360x720cru_simyr1850_c130415.nc surfdata_1x1pt_Sanjiang_CN-SJ1_I1850CLM45CN_simyr1850.nc" ;
+		:NCO = "4.4.4" ;
+data:
+
+ ALB_IMPROAD_DIF =
+  0.230000004172325,
+  0.129999995231628,
+  0.129999995231628,
+  0.230000004172325,
+  0.129999995231628,
+  0.129999995231628 ;
+
+ ALB_IMPROAD_DIR =
+  0.230000004172325,
+  0.129999995231628,
+  0.129999995231628,
+  0.230000004172325,
+  0.129999995231628,
+  0.129999995231628 ;
+
+ ALB_PERROAD_DIF =
+  0.0799999982118607,
+  0.0799999982118607,
+  0.0799999982118607,
+  0.0799999982118607,
+  0.0799999982118607,
+  0.0799999982118607 ;
+
+ ALB_PERROAD_DIR =
+  0.0799999982118607,
+  0.0799999982118607,
+  0.0799999982118607,
+  0.0799999982118607,
+  0.0799999982118607,
+  0.0799999982118607 ;
+
+ ALB_ROOF_DIF =
+  0.280000001192093,
+  0.314000010490417,
+  0.28999999165535,
+  0.280000001192093,
+  0.314000010490417,
+  0.28999999165535 ;
+
+ ALB_ROOF_DIR =
+  0.280000001192093,
+  0.314000010490417,
+  0.28999999165535,
+  0.280000001192093,
+  0.314000010490417,
+  0.28999999165535 ;
+
+ ALB_WALL_DIF =
+  0.200000002980232,
+  0.279000014066696,
+  0.279000014066696,
+  0.200000002980232,
+  0.279000014066696,
+  0.279000014066696 ;
+
+ ALB_WALL_DIR =
+  0.200000002980232,
+  0.279000014066696,
+  0.279000014066696,
+  0.200000002980232,
+  0.279000014066696,
+  0.279000014066696 ;
+
+ AREA =
+  2078.46684738655 ;
+
+ CANYON_HWR =
+  7.19999980926514,
+  1.79999995231628,
+  0.479999989271164 ;
+
+ CV_IMPROAD =
+  2100000,
+  2060470.625,
+  2060470.625,
+  1773000,
+  1712294.75,
+  1712294.75,
+  1545600,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0 ;
+
+ CV_ROOF =
+  585114.25,
+  554066,
+  719404,
+  585114.25,
+  554066,
+  719404,
+  585114.25,
+  554066,
+  719404,
+  585114.25,
+  554066,
+  719404,
+  585114.25,
+  554066,
+  719404 ;
+
+ CV_WALL =
+  1079394.75,
+  936189,
+  932117.3125,
+  1079394.75,
+  936189,
+  932117.3125,
+  1079394.75,
+  936189,
+  932117.3125,
+  1079394.75,
+  936189,
+  932117.3125,
+  1079394.75,
+  936189,
+  932117.3125 ;
+
+ Ds =
+  0.100000001490116 ;
+
+ Dsmax =
+  2.87484002113342 ;
+
+ EF1_BTR =
+  12824 ;
+
+ EF1_CRP =
+  71 ;
+
+ EF1_FDT =
+  627 ;
+
+ EF1_FET =
+  5098 ;
+
+ EF1_GRS =
+  941 ;
+
+ EF1_SHR =
+  12824 ;
+
+ EM_IMPROAD =
+  0.879999995231628,
+  0.910000026226044,
+  0.910000026226044 ;
+
+ EM_PERROAD =
+  0.949999988079071,
+  0.949999988079071,
+  0.949999988079071 ;
+
+ EM_ROOF =
+  0.727999985218048,
+  0.913999974727631,
+  0.910000026226044 ;
+
+ EM_WALL =
+  0.90200001001358,
+  0.907000005245209,
+  0.907000005245209 ;
+
+ F0 =
+  0.0621052631578947 ;
+
+ FMAX =
+  0.384095659650021 ;
+
+ GLC_MEC = 0, 200, 400, 700, 1000, 1300, 1600, 2000, 2500, 3000, 10000 ;
+
+ HT_ROOF =
+  180,
+  45,
+  12 ;
+
+ LAKEDEPTH =
+  10 ;
+
+ LANDFRAC_PFT =
+  1 ;
+
+ LATIXY =
+  47.75 ;
+
+ LONGXY =
+  133.75 ;
+
+ MONTHLY_HEIGHT_BOT =
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0,
+  8.5,
+  8.5,
+  7,
+  1,
+  1,
+  10,
+  11.5,
+  11.5,
+  0.100000001490116,
+  0.100000001490116,
+  0.100000001490116,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258,
+  0.00999999977648258 ;
+
+ MONTHLY_HEIGHT_TOP =
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0,
+  17,
+  17,
+  14,
+  35,
+  35,
+  18,
+  20,
+  20,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5,
+  0.5 ;
+
+ MONTHLY_LAI =
+  0,
+  2.86319279670715,
+  2.09999990463257,
+  0,
+  4.21227312088013,
+  2.92456150054932,
+  1.98842489719391,
+  0,
+  0,
+  0.107451044023037,
+  0.0549201741814613,
+  0.0446145460009575,
+  0,
+  0,
+  0.0105729894712567,
+  0,
+  0,
+  0,
+  2.88069081306458,
+  2.09999990463257,
+  0,
+  4.39066600799561,
+  3.06063318252563,
+  2.14837861061096,
+  0,
+  0,
+  0.117331132292747,
+  0.00255461409687996,
+  0,
+  0,
+  0,
+  0.0811358615756035,
+  0,
+  0,
+  0,
+  2.85717844963074,
+  2.09999990463257,
+  0,
+  4.27579641342163,
+  3.12035512924194,
+  1.9193286895752,
+  0,
+  0,
+  0.297841399908066,
+  0.13179312646389,
+  0.258764386177063,
+  0,
+  0.100000001490116,
+  0.151575207710266,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  2.85717844963074,
+  2.09999990463257,
+  0,
+  4.21292972564697,
+  3.08067774772644,
+  2.05960488319397,
+  0,
+  0,
+  0.485159248113632,
+  0.0816673710942268,
+  0.142766550183296,
+  0,
+  0.300000011920929,
+  0.16214819252491,
+  0.200000002980232,
+  0.200000002980232,
+  0,
+  2.97379946708679,
+  2.09999990463257,
+  1.05409061908722,
+  4.54918241500854,
+  3.28065061569214,
+  2.95702266693115,
+  0.699999988079071,
+  0.200000002980232,
+  0.982777416706085,
+  1.68652486801147,
+  1.32001090049744,
+  0.400000005960464,
+  0.600000023841858,
+  0.569938004016876,
+  0.5,
+  0.5,
+  0,
+  3.66627025604248,
+  2.20000004768372,
+  3.99922919273376,
+  4.68422985076904,
+  3.13773846626282,
+  2.92798209190369,
+  4.40000009536743,
+  1.60000002384186,
+  1.37196099758148,
+  3.8034040927887,
+  3.58215403556824,
+  3.90000009536743,
+  1.20000004768372,
+  1.61630594730377,
+  1.20000004768372,
+  1.20000004768372,
+  0,
+  3.8392813205719,
+  2.59999990463257,
+  4.30388736724854,
+  4.69951343536377,
+  3.17662501335144,
+  3.0625114440918,
+  4.69999980926514,
+  2.70000004768372,
+  1.06203627586365,
+  3.89312672615051,
+  3.89292502403259,
+  4,
+  2.09999990463257,
+  2.5080201625824,
+  2,
+  2,
+  0,
+  3.92365288734436,
+  3,
+  4.05712747573853,
+  4.77984619140625,
+  3.19933104515076,
+  2.92865943908691,
+  4.59999990463257,
+  3.09999990463257,
+  0.767912685871124,
+  3.91704630851746,
+  3.81784582138062,
+  3.70000004768372,
+  2.5,
+  2.63764929771423,
+  2.40000009536743,
+  2.40000009536743,
+  0,
+  3.22182750701904,
+  2.29999995231628,
+  3.1769015789032,
+  4.5237283706665,
+  3.00555443763733,
+  3.09183716773987,
+  3.96318244934082,
+  2.29999995231628,
+  0.538287937641144,
+  3.55545210838318,
+  3.32861661911011,
+  3,
+  1.79999995231628,
+  2.06708645820618,
+  1.79999995231628,
+  1.79999995231628,
+  0,
+  2.86920714378357,
+  2.09999990463257,
+  0.580751001834869,
+  4.56425189971924,
+  3.14879870414734,
+  3.06112766265869,
+  0.826364815235138,
+  0,
+  0.364623963832855,
+  0.588989198207855,
+  0.716314911842346,
+  0,
+  0.400000005960464,
+  0.402654379606247,
+  0.400000005960464,
+  0.400000005960464,
+  0,
+  2.86319279670715,
+  2.09999990463257,
+  0,
+  4.44135189056396,
+  2.99065852165222,
+  2.93411111831665,
+  0,
+  0,
+  0.257183969020844,
+  0.31322917342186,
+  0.346462547779083,
+  0.100000001490116,
+  0.200000002980232,
+  0.202654361724854,
+  0.200000002980232,
+  0.200000002980232,
+  0,
+  2.85717844963074,
+  2.09999990463257,
+  0,
+  4.18218564987183,
+  2.9325795173645,
+  2.28984093666077,
+  0,
+  0,
+  0.176082372665405,
+  0.0239737704396248,
+  0.0643083676695824,
+  0,
+  0.100000001490116,
+  0.0863948464393616,
+  0.100000001490116,
+  0.100000001490116 ;
+
+ MONTHLY_SAI =
+  0,
+  0.840485274791718,
+  0.600000023841858,
+  0.879819214344025,
+  0.748982787132263,
+  0.500644326210022,
+  1.01229763031006,
+  1,
+  0.600000023841858,
+  0.358721852302551,
+  0.992328345775604,
+  1.00892293453217,
+  1,
+  0.600000023841858,
+  0.673093676567078,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  0.840485274791718,
+  0.600000023841858,
+  0.879819214344025,
+  0.721947491168976,
+  0.50049215555191,
+  0.824428856372833,
+  1,
+  0.600000023841858,
+  0.358626693487167,
+  0.976372003555298,
+  1.02676868438721,
+  1,
+  0.600000023841858,
+  0.673093676567078,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  0.840485274791718,
+  0.600000023841858,
+  0.879819214344025,
+  0.722105145454407,
+  0.500729143619537,
+  0.82240241765976,
+  1,
+  0.600000023841858,
+  0.358626693487167,
+  0.976237535476685,
+  1,
+  1,
+  0.600000023841858,
+  0.673093676567078,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  0.840485274791718,
+  0.600000023841858,
+  0.879819214344025,
+  0.721948087215424,
+  0.561023592948914,
+  0.81137877702713,
+  1,
+  0.600000023841858,
+  0.358626693487167,
+  0.975974321365356,
+  1,
+  1,
+  0.600000023841858,
+  0.673093676567078,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  0.840485274791718,
+  0.600000023841858,
+  0.879819214344025,
+  0.721947491168976,
+  0.50307297706604,
+  0.717710316181183,
+  1,
+  0.600000023841858,
+  0.358627319335938,
+  0.975964248180389,
+  1,
+  1,
+  0.600000023841858,
+  0.673093676567078,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  0.840485274791718,
+  0.600000023841858,
+  0.879819214344025,
+  0.769957780838013,
+  0.594313740730286,
+  0.740889012813568,
+  1,
+  0.600000023841858,
+  0.37304562330246,
+  0.975964248180389,
+  1,
+  1,
+  0.600000023841858,
+  0.673093676567078,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  0.86399781703949,
+  0.600000023841858,
+  0.879822254180908,
+  0.783434271812439,
+  0.530414700508118,
+  0.72671103477478,
+  1,
+  0.600000023841858,
+  0.523810744285583,
+  0.975964248180389,
+  1,
+  1,
+  0.600000023841858,
+  0.673093676567078,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  0.842309951782227,
+  0.600000023841858,
+  0.97925877571106,
+  0.745967864990234,
+  0.561736762523651,
+  0.797296226024628,
+  1,
+  0.600000023841858,
+  0.633646011352539,
+  0.975964248180389,
+  1,
+  1,
+  0.600000023841858,
+  0.673093676567078,
+  0.100000001490116,
+  0.100000001490116,
+  0,
+  1.12878978252411,
+  1,
+  1.45532739162445,
+  0.807310581207275,
+  0.643517255783081,
+  0.778633773326874,
+  1.17363512516022,
+  1.10000002384186,
+  0.505746781826019,
+  1.03058135509491,
+  1.10707497596741,
+  1.29999995231628,
+  0.899999976158142,
+  0.981508374214172,
+  0.600000023841858,
+  0.600000023841858,
+  0,
+  0.963694930076599,
+  0.699999988079071,
+  3.289231300354,
+  0.777162313461304,
+  0.526420772075653,
+  0.734675526618958,
+  3.7368175983429,
+  2.79999995231628,
+  0.436428159475327,
+  3.46973586082458,
+  3.14984154701233,
+  3.59999990463257,
+  1.89999997615814,
+  2.15125441551208,
+  1.39999997615814,
+  1.39999997615814,
+  0,
+  0.840485274791718,
+  0.600000023841858,
+  2.22649645805359,
+  0.795850157737732,
+  0.589347004890442,
+  0.732980310916901,
+  2.72636485099792,
+  1.39999997615814,
+  0.383893847465515,
+  2.06823682785034,
+  1.96615636348724,
+  1.79999995231628,
+  1.20000004768372,
+  1.24303698539734,
+  0.200000002980232,
+  0.200000002980232,
+  0,
+  0.840485274791718,
+  0.600000023841858,
+  1.15387654304504,
+  0.818856179714203,
+  0.587856709957123,
+  1.07190239429474,
+  1.36318242549896,
+  0.699999988079071,
+  0.375306516885757,
+  1.31415665149689,
+  1.29292511940002,
+  1,
+  0.699999988079071,
+  0.802530884742737,
+  0.100000001490116,
+  0.100000001490116 ;
+
+ NLEV_IMPROAD =
+  3,
+  2,
+  2 ;
+
+ ORGANIC =
+  48.5440665318441,
+  49.4635087523588,
+  42.5168871294098,
+  34.8641442931191,
+  27.9473575766831,
+  22.1325733720866,
+  17.4080100475099,
+  13.6375803848321,
+  0,
+  0 ;
+
+ P3 =
+  1623.77673918872 ;
+
+ PCT_CLAY =
+  25,
+  25,
+  25,
+  25,
+  26,
+  31,
+  34,
+  36,
+  34,
+  32 ;
+
+ PCT_GLACIER =
+  0 ;
+
+ PCT_GLC_GIC =
+  0 ;
+
+ PCT_GLC_ICESHEET =
+  0 ;
+
+ PCT_GLC_MEC =
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0 ;
+
+ PCT_GLC_MEC_GIC =
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0 ;
+
+ PCT_GLC_MEC_ICESHEET =
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0 ;
+
+ PCT_LAKE =
+  0 ;
+
+ PCT_PFT =
+  2,
+  0,
+  27,
+  0,
+  0,
+  0,
+  0,
+  0,
+  47,
+  0,
+  0,
+  0,
+  0,
+  23,
+  0,
+  1,
+  0 ;
+
+ PCT_SAND =
+  46,
+  46,
+  46,
+  46,
+  45,
+  39,
+  40,
+  37,
+  34,
+  43 ;
+
+ PCT_URBAN =
+  0,
+  0,
+  0 ;
+
+ PCT_WETLAND =
+  0 ;
+
+ PFTDATA_MASK =
+  1 ;
+
+ SLOPE =
+  0.101089465091346 ;
+
+ SOIL_COLOR =
+  8 ;
+
+ STD_ELEV =
+  6.2421195278911 ;
+
+ THICK_ROOF =
+  0.202999994158745,
+  0.114799998700619,
+  0.0920000001788139 ;
+
+ THICK_WALL =
+  0.286199986934662,
+  0.351000010967255,
+  0.328399986028671 ;
+
+ TK_IMPROAD =
+  1.89999997615814,
+  1.66999995708466,
+  1.66999995708466,
+  0.560000002384186,
+  0.560000002384186,
+  0.560000002384186,
+  0.360000014305115,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0 ;
+
+ TK_ROOF =
+  0.993788778781891,
+  0.0807241871953011,
+  0.105928756296635,
+  0.993788778781891,
+  0.0807241871953011,
+  0.105928756296635,
+  0.993788778781891,
+  0.0807241871953011,
+  0.105928756296635,
+  0.993788778781891,
+  0.0807241871953011,
+  0.105928756296635,
+  0.993788778781891,
+  0.0807241871953011,
+  0.105928756296635 ;
+
+ TK_WALL =
+  1.44716906547546,
+  1.32312440872192,
+  1.18142068386078,
+  1.44716906547546,
+  1.32312440872192,
+  1.18142068386078,
+  1.44716906547546,
+  1.32312440872192,
+  1.18142068386078,
+  1.44716906547546,
+  1.32312440872192,
+  1.18142068386078,
+  1.44716906547546,
+  1.32312440872192,
+  1.18142068386078 ;
+
+ TOPO =
+  55.7897355371691 ;
+
+ TOPO_GLC_MEC =
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0 ;
+
+ T_BUILDING_MAX =
+  300,
+  310,
+  310 ;
+
+ T_BUILDING_MIN =
+  292,
+  285,
+  285 ;
+
+ URBAN_REGION_ID =
+  8 ;
+
+ WIND_HGT_CANYON =
+  90,
+  22.5,
+  6 ;
+
+ WTLUNIT_ROOF =
+  0.5,
+  0.600000023841858,
+  0.349999994039536 ;
+
+ WTROAD_PERV =
+  0.200000002980232,
+  0.375,
+  0.615384638309479 ;
+
+ Ws =
+  0.952650010585785 ;
+
+ ZWT0 =
+  100 ;
+
+ abm =
+  4 ;
+
+ binfl =
+  0.0144779998809099 ;
+
+ gdp =
+  0.824628353118896 ;
+
+ mxsoil_color = 20 ;
+
+ peatf =
+  0 ;
+
+ time = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ;
+}

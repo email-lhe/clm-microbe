@@ -1,0 +1,11 @@
+&modelio
+ diri = '/storage/lhe/output/test/cpl'
+ diro = '/storage/lhe/output/test/run'
+ logfile = 'cpl.log.180509-160749'
+/
+&pio_inparm
+ pio_numiotasks = -99
+ pio_root = -99
+ pio_stride = -99
+ pio_typename = 'nothing'
+/
