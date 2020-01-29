@@ -98,6 +98,10 @@ m_domf_f 0.3
 m_doms1_f 0.2
 m_doms2_f 0.15
 m_doms3_f 0.05
+cn_bacteria 5
+cn_fungi 15
+cn_dom 10
+CUEmax 0.8
 m_dPlantTrans 0.007
 AOM				0.9
 H2maxCH4		1

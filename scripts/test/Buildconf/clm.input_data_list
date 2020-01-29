@@ -1,0 +1,10 @@
+stream_fldfilename_popdens = /storage/projects/inputdata/lnd/clm2/firedata/clmforc.Li_2012_hdm_0.5x0.5_AVHRR_simyr1850-2010_c130401.nc
+stream_fldfilename_lightng = /storage/projects/inputdata/atm/datm7/NASA_LIS/clmforc.Li_2012_climo1995-2011.T62.lnfm_c130327.nc
+fpftcon = /storage/lhe/clm-microbe/scripts/test/pft-physiology.c130801.NGEE.nc
+fsnowaging = /storage/projects/inputdata/lnd/clm2/snicardata/snicar_drdt_bst_fit_60_c070416.nc
+fsnowoptics = /storage/projects/inputdata/lnd/clm2/snicardata/snicar_optics_5bnd_c090915.nc
+fsurdat = /storage/projects/inputdata/lnd/clm2/surfdata_map/surfdata_1x1pt_NGEE_US-Brw_I20TRCLM45CN_simyr1850.nc
+fatmlndfrc = /storage/projects/inputdata/share/domains/domain.clm/domain.lnd.1x1pt_US-Brw_navy.nc
+finidat =  
+megan_factors_file = /storage/projects/inputdata/atm/cam/chem/trop_mozart/emis/megan21_emis_factors_c20120313.nc
+stream_fldfilename_ndep = /storage/projects/inputdata/lnd/clm2/ndepdata/fndep_clm_hist_simyr1849-2006_1.9x2.5_c100428.nc

@@ -1,0 +1,8 @@
+&clm_inparm 
+hist_mfilt = 365
+hist_nhtfrq = -24
+ fsurdat = '/storage/projects/inputdata/lnd/clm2/surfdata_map/surfdata_1x1pt_NGEE_US-Brw_I20TRCLM45CN_simyr1850.nc'
+ fpftcon = '/storage/lhe/clm-microbe/scripts/test/pft-physiology.c130801.NGEE.nc'
+ stream_fldfilename_ndep = '/storage/projects/inputdata/lnd/clm2/ndepdata/fndep_clm_hist_simyr1849-2006_1.9x2.5_c100428.nc'
+spinup_state = 1
+/ 

@@ -1,0 +1,11 @@
+&modelio
+ diri = '/storage/lhe/output/test/ocn'
+ diro = '/storage/lhe/output/test/run'
+ logfile = 'ocn.log.180509-160749'
+/
+&pio_inparm
+ pio_numiotasks = -99
+ pio_root = 0
+ pio_stride = -99
+ pio_typename = 'nothing'
+/

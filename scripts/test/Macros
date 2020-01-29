@@ -1,0 +1,64 @@
+#
+# Makefile Macros generated from /mnt/storage/lhe/clm-microbe/scripts/ccsm_utils/Machines/config_compilers.xml using
+# COMPILER=gnu
+# OS=Linux
+# MACH=peony
+#
+CPPDEFS+= -DFORTRANUNDERSCORE -DNO_R16 -DLinux -DCPRGNU 
+
+SLIBS+=
+
+CONFIG_ARGS:=
+
+CXX_LINKER:=FORTRAN
+
+ESMF_LIBDIR:=
+
+FC_AUTO_R8:= -fdefault-real-8 
+
+FFLAGS:= -O -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none 
+
+FFLAGS_NOOPT:= -O0 
+
+FIXEDFLAGS:=  -ffixed-form 
+
+FREEFLAGS:= -ffree-form 
+
+LAPACK_LIBDIR:= /usr/local/lib64 
+
+MPICC:= mpicc  
+
+MPICXX:= mpicxx 
+
+MPIFC:= mpif90 
+
+MPI_LIB_NAME:= mpich 
+
+MPI_PATH:=
+
+NETCDF_PATH:=/usr/local/netcdf-4.4-mpich32-gcc54
+
+PNETCDF_PATH:=
+
+SCC:= gcc 
+
+SCXX:= g++ 
+
+SFC:= gfortran 
+
+SUPPORTS_CXX:=TRUE
+
+ifeq ($(DEBUG), TRUE) 
+   FFLAGS += -g -Wall 
+endif
+
+ifeq ($(compile_threaded), true) 
+   LDFLAGS += -fopenmp 
+   CFLAGS += -fopenmp 
+   FFLAGS += -fopenmp 
+endif
+
+ifeq ($(MODEL), cism) 
+   CMAKE_OPTS += -D CISM_GNU=ON 
+endif
+
