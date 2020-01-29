@@ -16,7 +16,7 @@ module CNDecompCascadeMod_BGC
    use shr_const_mod, only: SHR_CONST_TKFRZ
    use clm_varpar   , only: nlevsoi, nlevgrnd, nlevdecomp, ndecomp_cascade_transitions, ndecomp_pools, nsompools
 #ifdef MICROBE
-   use clm_varpar   , only: i_met_lit, i_cel_lit, i_lig_lit, i_cwd, i_bacteria, i_fungi, i_dom, cn_bacteria, cn_fungi, cn_dom, CUEmax
+   use clm_varpar   , only: i_met_lit, i_cel_lit, i_lig_lit, i_cwd, i_bacteria, i_fungi, i_dom
    use microbevarcon
 #else
    use clm_varpar   , only: i_met_lit, i_cel_lit, i_lig_lit, i_cwd
@@ -639,9 +639,9 @@ subroutine init_decompcascade(begc, endc)
    !~ rf_s3m = 0.55
    !~ rf_s4m = 0.55
    ! Sinsabaugh et al., 2013, Ecology Letters, 16, 930-939
-   rf_l1m = CUEmax * min(1._r8, 8.0 / (initial_cn_ratio(i_litr1) * CUEmax))
-   rf_l2m = CUEmax * min(1._r8, 8.0 / (initial_cn_ratio(i_litr2) * CUEmax))
-   rf_l3m = CUEmax * min(1._r8, 8.0 / (initial_cn_ratio(i_litr3) * CUEmax))
+   rf_l1m = (CUEmax) * min(1._r8, 8.0 / ((initial_cn_ratio(i_litr1) * (CUEmax))))
+   rf_l2m = (CUEmax) * min(1._r8, 8.0 / ((initial_cn_ratio(i_litr2) * (CUEmax))))
+   rf_l3m = (CUEmax) * min(1._r8, 8.0 / ((initial_cn_ratio(i_litr3) * (CUEmax))))
    !rf_s1m = 0.28
    !rf_s2m = 0.46
    !rf_s3m = 0.55
@@ -1129,7 +1129,8 @@ subroutine decomp_rate_constants(lbc, ubc, num_soilc, filter_soilc)
 
    real(r8), pointer :: dz(:,:)             ! soil layer thickness (m)
    real(r8), pointer :: t_soisno(:,:)       ! soil temperature (Kelvin)  (-nlevsno+1:nlevgrnd)
-    real(r8), pointer :: sucsat(:,:)        ! minimum soil suction (mm)
+   real(r8), pointer :: t_grnd(:)           ! ground temperature (Kelvin)
+   real(r8), pointer :: sucsat(:,:)        ! minimum soil suction (mm)
    real(r8), pointer :: soilpsi(:,:)        ! soil water potential in each soil layer (MPa)
 #if (defined LCH4) || (defined MICROBE)
    real(r8), pointer :: o2stress_unsat(:,:) ! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
@@ -1195,6 +1196,7 @@ subroutine decomp_rate_constants(lbc, ubc, num_soilc, filter_soilc)
 
    ! Assign local pointers to derived type arrays
    t_soisno              => ces%t_soisno
+   t_grnd              => ces%t_grnd
    sucsat                => cps%sucsat
    soilpsi               => cps%soilpsi
    dz                    => cps%dz

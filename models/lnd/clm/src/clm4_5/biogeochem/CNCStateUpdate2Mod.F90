@@ -46,7 +46,8 @@ subroutine CStateUpdate2(num_soilc, filter_soilc, num_soilp, filter_soilp, isoto
    use clm_varpar   , only: nlevsoi, nlevdecomp, i_met_lit, i_cel_lit, i_lig_lit, i_cwd
 
 #if(defined MICROBE)
-   use clm_varpar   , only: i_met_lit, i_cel_lit, i_lig_lit, i_cwd, i_dom, cn_dom
+   use clm_varpar   , only: i_met_lit, i_cel_lit, i_lig_lit, i_cwd, i_dom
+   use microbevarcon
 #endif
 !
 ! !ARGUMENTS:

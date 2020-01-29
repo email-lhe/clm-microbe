@@ -49,7 +49,8 @@ subroutine CSummary(num_soilc, filter_soilc, num_soilp, filter_soilp, isotope)
    use clm_varctl, only: iulog, co2_ppmv
    use shr_sys_mod, only: shr_sys_flush
 #ifdef MICROBE
-   use clm_varpar  , only: nlevdecomp,ndecomp_pools,ndecomp_cascade_transitions, cn_dom
+   use clm_varpar  , only: nlevdecomp,ndecomp_pools,ndecomp_cascade_transitions
+   use microbevarcon
 #else
    use clm_varpar  , only: nlevdecomp,ndecomp_pools,ndecomp_cascade_transitions
 #endif

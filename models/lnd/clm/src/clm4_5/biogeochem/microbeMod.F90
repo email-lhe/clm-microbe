@@ -112,7 +112,7 @@ subroutine microbech4 (lbg, ubg, lbl, ubl, lbc, ubc, lbp, ubp, num_soilc, filter
 	use shr_kind_mod , only : r8 => shr_kind_r8
 	use clmtype
 	use subgridAveMod , only : p2c, c2g
-	use clm_varpar, only : nlevgrnd, nlevdecomp, i_bacteria, i_fungi, i_dom, cn_dom
+	use clm_varpar, only : nlevgrnd, nlevdecomp, i_bacteria, i_fungi, i_dom
 	use pftvarcon,  only : noveg
 	use clm_varcon, only : secspday, istwet, istsoil, istdlak, spval, istcrop
 	use microbevarcon 

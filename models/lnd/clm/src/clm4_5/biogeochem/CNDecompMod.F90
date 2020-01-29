@@ -73,7 +73,8 @@ subroutine CNDecompAlloc (lbp, ubp, lbc, ubc, num_soilc, filter_soilc, &
    use CNDecompCascadeMod_BGC
    use clm_time_manager, only : get_step_size
    use clm_varcon, only: secspday   
-   use clm_varpar, only: i_bacteria, i_fungi, i_dom, cn_dom
+   use clm_varpar, only: i_bacteria, i_fungi, i_dom
+   use microbevarcon
 #endif
 !
 ! !ARGUMENTS:

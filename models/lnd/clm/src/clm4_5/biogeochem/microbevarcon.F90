@@ -35,7 +35,7 @@ module microbevarcon
   real(r8), PARAMETER :: Mmmin = 0.1
   real(r8), PARAMETER :: MFGbiomin = 1e-15
 
-  integer, parameter :: nummicrobepar = 103
+  integer, parameter :: nummicrobepar = 107
   real(r8) :: q10ch4base = 295._r8  ! Rough estimate from comparison between Walter and previous CLM-CH4 data
   ! Uses Michigan bog data from Shannon & White
   ! This is the temperature at which the effective f_ch4 actually equals the constant f_ch4.
@@ -260,6 +260,10 @@ module microbevarcon
 	real(r8) :: m_doms1_f = 0.2
 	real(r8) :: m_doms2_f = 0.15
 	real(r8) :: m_doms3_f = 0.05
+  real(r8) :: cn_bacteria = 5
+  real(r8) :: cn_fungi = 15
+  real(r8) :: cn_dom = 10
+  real(r8) :: CUEmax = 0.8
   
 !
 ! !PUBLIC MEMBER FUNCTIONS:
@@ -438,6 +442,10 @@ q10ch4base                         = dummy(i); i=i+1
 	m_doms1_f = dummy(i); i=i+1
 	m_doms2_f = dummy(i); i=i+1
 	m_doms3_f = dummy(i); i=i+1
+  cn_bacteria = dummy(i); i=i+1
+  cn_fungi = dummy(i); i=i+1
+  cn_dom = dummy(i); i=i+1
+  CUEmax = dummy(i); i=i+1
 	m_dPlantTrans = dummy(i); i=i+1
     
     !xiaofeng xu creared new mechanisms and the new parameters         
@@ -553,6 +561,10 @@ end if
     call mpi_bcast (m_doms1_f, 1 , MPI_REAL8, 0, mpicom, ierr)
     call mpi_bcast (m_doms2_f, 1 , MPI_REAL8, 0, mpicom, ierr)
     call mpi_bcast (m_doms3_f, 1 , MPI_REAL8, 0, mpicom, ierr)
+    call mpi_bcast (cn_bacteria, 1 , MPI_REAL8, 0, mpicom, ierr)
+    call mpi_bcast (cn_fungi, 1 , MPI_REAL8, 0, mpicom, ierr)
+    call mpi_bcast (cn_dom, 1 , MPI_REAL8, 0, mpicom, ierr)
+    call mpi_bcast (CUEmax, 1 , MPI_REAL8, 0, mpicom, ierr)
     call mpi_bcast (m_dPlantTrans, 1 , MPI_REAL8, 0, mpicom, ierr)
     
     if (masterproc) then
@@ -667,6 +679,10 @@ end if
 	write(iulog,*)'m_doms1_f = ', m_doms1_f
 	write(iulog,*)'m_doms2_f = ', m_doms2_f
 	write(iulog,*)'m_doms3_f = ', m_doms3_f
+  write(iulog,*)'cn_bacteria = ', cn_bacteria
+  write(iulog,*)'cn_fungi = ', cn_fungi
+  write(iulog,*)'cn_dom = ', cn_dom
+  write(iulog,*)'CUEmax = ', CUEmax
 	write(iulog,*)'m_dPlantTrans = ', m_dPlantTrans
 	
        if (ch4offline) write(iulog,*)'CH4 Model will be running offline and not affect fluxes to atmosphere.'
@@ -682,4 +698,3 @@ end if
 #endif
 ! defined MICROBE
 end module microbevarcon
-
