@@ -35,7 +35,7 @@ module microbevarcon
   real(r8), PARAMETER :: Mmmin = 0.1
   real(r8), PARAMETER :: MFGbiomin = 1e-15
 
-  integer, parameter :: nummicrobepar = 107
+  integer, parameter :: nummicrobepar = 108
   real(r8) :: q10ch4base = 295._r8  ! Rough estimate from comparison between Walter and previous CLM-CH4 data
   ! Uses Michigan bog data from Shannon & White
   ! This is the temperature at which the effective f_ch4 actually equals the constant f_ch4.
@@ -264,6 +264,7 @@ module microbevarcon
   real(r8) :: cn_fungi = 15
   real(r8) :: cn_dom = 10
   real(r8) :: CUEmax = 0.8
+  real(r8) :: fstor2tran = 0.5     ! fraction of storage to move to transfer on each onset
   
 !
 ! !PUBLIC MEMBER FUNCTIONS:
@@ -446,6 +447,7 @@ q10ch4base                         = dummy(i); i=i+1
   cn_fungi = dummy(i); i=i+1
   cn_dom = dummy(i); i=i+1
   CUEmax = dummy(i); i=i+1
+  fstor2tran = dummy(i); i=i+1
 	m_dPlantTrans = dummy(i); i=i+1
     
     !xiaofeng xu creared new mechanisms and the new parameters         
@@ -565,6 +567,7 @@ end if
     call mpi_bcast (cn_fungi, 1 , MPI_REAL8, 0, mpicom, ierr)
     call mpi_bcast (cn_dom, 1 , MPI_REAL8, 0, mpicom, ierr)
     call mpi_bcast (CUEmax, 1 , MPI_REAL8, 0, mpicom, ierr)
+    call mpi_bcast (fstor2tran, 1 , MPI_REAL8, 0, mpicom, ierr)
     call mpi_bcast (m_dPlantTrans, 1 , MPI_REAL8, 0, mpicom, ierr)
     
     if (masterproc) then
@@ -683,6 +686,7 @@ end if
   write(iulog,*)'cn_fungi = ', cn_fungi
   write(iulog,*)'cn_dom = ', cn_dom
   write(iulog,*)'CUEmax = ', CUEmax
+  write(iulog,*)'fstor2tran = ', fstor2tran
 	write(iulog,*)'m_dPlantTrans = ', m_dPlantTrans
 	
        if (ch4offline) write(iulog,*)'CH4 Model will be running offline and not affect fluxes to atmosphere.'
