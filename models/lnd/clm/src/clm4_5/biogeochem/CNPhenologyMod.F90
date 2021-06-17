@@ -18,9 +18,6 @@ module CNPhenologyMod
   use clm_varpar  , only: numpft
   use shr_sys_mod , only: shr_sys_flush
   use abortutils  , only: endrun
-! transfer parameters
-  use microbevarcon, only: fstor2tran
-
   implicit none
   save
   private
@@ -41,6 +38,7 @@ module CNPhenologyMod
   real(r8)           :: crit_dayl       ! critical daylength for offset (seconds)
   real(r8)           :: ndays_on        ! number of days to complete onset
   real(r8)           :: ndays_off       ! number of days to complete offset
+  real(r8)           :: fstor2tran      ! fraction of storage to move to transfer on each onset
   real(r8)           :: crit_onset_fdd  ! critical number of freezing days
   real(r8)           :: crit_onset_swi  ! water stress days for offset trigger
   real(r8)           :: soilpsi_on      ! water potential for onset trigger (MPa)
@@ -200,7 +198,9 @@ subroutine CNPhenologyInit( begp, endp )
     ndays_on  = 30._r8
     ndays_off = 15._r8
 
-! -----------------------------------------
+    ! transfer parameters
+    fstor2tran = 0.5_r8
+    ! -----------------------------------------
     ! Constants for CNStressDecidPhenology
     ! -----------------------------------------
 

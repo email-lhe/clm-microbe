@@ -363,6 +363,33 @@ type, public :: pft_epc_type
    real(r8), pointer :: fleafcn(:)      ! C:N during grain fill; leaf
    real(r8), pointer :: ffrootcn(:)     ! C:N during grain fill; froot
    real(r8), pointer :: fstemcn(:)      ! C:N during grain fill; stem
+
+   real(r8), pointer :: m_bdom_f(:)     ! bacterial C -> DOM
+   real(r8), pointer :: m_bs1_f(:)     ! bacterial C -> SOM1
+   real(r8), pointer :: m_bs2_f(:)     ! bacterial C -> SOM2
+   real(r8), pointer :: m_bs3_f(:)     ! bacterial C -> SOM3
+   real(r8), pointer :: m_fdom_f(:)     ! fungal C -> DOM
+   real(r8), pointer :: m_fs1_f(:)     ! fungal C -> SOM1
+   real(r8), pointer :: m_fs2_f(:)     ! fungal C -> SOM2
+   real(r8), pointer :: m_fs3_f(:)     ! fungal C -> SOM3
+   real(r8), pointer :: m_rf_s1m(:)     ! SOM1 -> microbes
+   real(r8), pointer :: m_rf_s2m(:)     ! SOM2 -> microbes
+   real(r8), pointer :: m_rf_s3m(:)     ! SOM3 -> microbes
+   real(r8), pointer :: m_rf_s4m(:)     ! SOM4 -> microbes
+   real(r8), pointer :: m_batm_f(:)     ! bacteria -> atmosphere
+   real(r8), pointer :: m_fatm_f(:)     ! fungi -> atmosphere
+   real(r8), pointer :: m_domb_f(:)     ! DOM -> bacteria
+   real(r8), pointer :: m_domf_f(:)     ! DOM -> fungi
+   real(r8), pointer :: m_doms1_f(:)     ! DOM -> SOM1
+   real(r8), pointer :: m_doms2_f(:)     ! DOM -> SOM2
+   real(r8), pointer :: m_doms3_f(:)     ! DOM -> SOM3
+   real(r8), pointer :: cn_bacteria(:)     ! C:N ratio of bacteria
+   real(r8), pointer :: cn_fungi(:)     ! C:N ratio of fungi
+   real(r8), pointer :: k_dom(:)     ! turnover rate of DOM
+   real(r8), pointer :: k_bacteria(:)     ! turnover rate of bacteria
+   real(r8), pointer :: k_fungi(:)     ! turnover rate of fungi
+   real(r8), pointer :: decomp_depth_efolding(:)     ! (meters) e-folding depth for reduction in decomposition [set to large number for depth-independance]
+
 end type pft_epc_type
 
 type(pft_epc_type), public, target, save :: pftcon
@@ -1615,67 +1642,67 @@ type(column_cstate_type), target :: cc14s    !column carbon-14 state
 type, public :: column_ch4_type
    ! new variables for CH4 code
    ! column-level methane fluxes
-   real(r8), pointer :: ch4_prod_depth_sat(:,:) ! CH4 production rate from methanotrophs (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_prod_depth_unsat(:,:) ! CH4 production rate from methanotrophs (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_prod_depth_lake(:,:)! CH4 production rate from methanotrophs (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_oxid_depth_sat(:,:) ! CH4 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_oxid_depth_unsat(:,:) !CH4 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_oxid_depth_lake(:,:) ! CH4 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_aere_depth_sat(:,:) ! CH4 loss rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_aere_depth_unsat(:,:) ! CH4 loss rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_tran_depth_sat(:,:) ! CH4 loss rate via transpiration in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_tran_depth_unsat(:,:) ! CH4 loss rate via transpiration in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_ebul_depth_sat(:,:) ! CH4 loss rate via ebullition in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_ebul_depth_unsat(:,:) ! CH4 loss rate via ebullition in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: ch4_ebul_total_sat(:)   ! Total column CH4 ebullition (mol/m2/s)
-   real(r8), pointer :: ch4_ebul_total_unsat(:)   ! Total column CH4 ebullition (mol/m2/s)
-   real(r8), pointer :: ch4_surf_aere_sat(:)   ! CH4 aerenchyma flux to atmosphere (after oxidation) (mol/m2/s)
-   real(r8), pointer :: ch4_surf_aere_unsat(:)   ! CH4 aerenchyma flux to atmosphere (after oxidation) (mol/m2/s)
-   real(r8), pointer :: ch4_surf_ebul_sat(:)   ! CH4 ebullition flux to atmosphere (after oxidation) (mol/m2/s)
-   real(r8), pointer :: ch4_surf_ebul_unsat(:)   ! CH4 ebullition flux to atmosphere (after oxidation) (mol/m2/s)
-   real(r8), pointer :: ch4_surf_ebul_lake(:)   ! CH4 ebullition flux to atmosphere (after oxidation) (mol/m2/s)
-   real(r8), pointer :: co2_aere_depth_sat(:,:) ! CO2 loss rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: co2_aere_depth_unsat(:,:) ! CO2 loss rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: o2_oxid_depth_sat(:,:)  ! O2 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: o2_oxid_depth_unsat(:,:)  ! O2 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: o2_aere_depth_sat(:,:)  ! O2 gain rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: o2_aere_depth_unsat(:,:)  ! O2 gain rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: o2_decomp_depth_sat(:,:) !O2 consumption during decomposition in each soil layer (nlevsoi) (mol/m3/s)
-   real(r8), pointer :: o2_decomp_depth_unsat(:,:)!O2 consumption during decomposition in each soil layer (nlevsoi) (mol/m3/s)
-   real(r8), pointer :: co2_decomp_depth_sat(:,:)  ! CO2 production during decomposition in each soil layer (nlevsoi) (mol/m3/s)
+   real(r8), pointer :: ch4_prod_depth_sat(:,:) 	! CH4 production rate from methanotrophs (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_prod_depth_unsat(:,:) 	! CH4 production rate from methanotrophs (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_prod_depth_lake(:,:)	! CH4 production rate from methanotrophs (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_oxid_depth_sat(:,:) 	! CH4 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_oxid_depth_unsat(:,:) 	!CH4 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_oxid_depth_lake(:,:) 	! CH4 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_aere_depth_sat(:,:) 	! CH4 loss rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_aere_depth_unsat(:,:) 	! CH4 loss rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_tran_depth_sat(:,:) 	! CH4 loss rate via transpiration in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_tran_depth_unsat(:,:) 	! CH4 loss rate via transpiration in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_ebul_depth_sat(:,:) 	! CH4 loss rate via ebullition in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_ebul_depth_unsat(:,:) 	! CH4 loss rate via ebullition in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: ch4_ebul_total_sat(:)   		! Total column CH4 ebullition (mol/m2/s)
+   real(r8), pointer :: ch4_ebul_total_unsat(:)   	! Total column CH4 ebullition (mol/m2/s)
+   real(r8), pointer :: ch4_surf_aere_sat(:)   		! CH4 aerenchyma flux to atmosphere (after oxidation) (mol/m2/s)
+   real(r8), pointer :: ch4_surf_aere_unsat(:)   	! CH4 aerenchyma flux to atmosphere (after oxidation) (mol/m2/s)
+   real(r8), pointer :: ch4_surf_ebul_sat(:)   		! CH4 ebullition flux to atmosphere (after oxidation) (mol/m2/s)
+   real(r8), pointer :: ch4_surf_ebul_unsat(:)   	! CH4 ebullition flux to atmosphere (after oxidation) (mol/m2/s)
+   real(r8), pointer :: ch4_surf_ebul_lake(:)   		! CH4 ebullition flux to atmosphere (after oxidation) (mol/m2/s)
+   real(r8), pointer :: co2_aere_depth_sat(:,:) 	! CO2 loss rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: co2_aere_depth_unsat(:,:) 	! CO2 loss rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: o2_oxid_depth_sat(:,:)  		! O2 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: o2_oxid_depth_unsat(:,:)  	! O2 consumption rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: o2_aere_depth_sat(:,:)  	! O2 gain rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: o2_aere_depth_unsat(:,:)  	! O2 gain rate via aerenchyma in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: o2_decomp_depth_sat(:,:) 	!O2 consumption during decomposition in each soil layer (nlevsoi) (mol/m3/s)
+   real(r8), pointer :: o2_decomp_depth_unsat(:,:)	!O2 consumption during decomposition in each soil layer (nlevsoi) (mol/m3/s)
+   real(r8), pointer :: co2_decomp_depth_sat(:,:)  	! CO2 production during decomposition in each soil layer (nlevsoi) (mol/m3/s)
    real(r8), pointer :: co2_decomp_depth_unsat(:,:)  ! CO2 production during decomposition in each soil layer (nlevsoi) (mol/m3/s)
-   real(r8), pointer :: co2_oxid_depth_sat(:,:) ! CO2 production rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: co2_oxid_depth_unsat(:,:) ! CO2 production rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
-   real(r8), pointer :: conc_o2_sat(:,:)        ! O2 conc in each soil layer (mol/m3) (nlevsoi)
-   real(r8), pointer :: conc_o2_unsat(:,:)        ! O2 conc in each soil layer (mol/m3) (nlevsoi)
-   real(r8), pointer :: conc_o2_lake(:,:)        ! O2 conc in each soil layer (mol/m3) (nlevsoi)
-   real(r8), pointer :: conc_ch4_sat(:,:)       ! CH4 conc in each soil layer (mol/m3) (nlevsoi)
-   real(r8), pointer :: conc_ch4_unsat(:,:)       ! CH4 conc in each soil layer (mol/m3) (nlevsoi)
-   real(r8), pointer :: conc_ch4_lake(:,:)      ! CH4 conc in each soil layer (mol/m3) (nlevsoi)
-   real(r8), pointer :: ch4_surf_diff_sat(:)    ! CH4 surface flux (mol/m2/s)
-   real(r8), pointer :: ch4_surf_diff_unsat(:)    ! CH4 surface flux (mol/m2/s)
-   real(r8), pointer :: ch4_surf_diff_lake(:)   ! CH4 surface flux (mol/m2/s)
-   real(r8), pointer :: ch4_dfsat_flux(:)       ! CH4 flux to atm due to decreasing fsat (kg C/m^2/s) [+]
+   real(r8), pointer :: co2_oxid_depth_sat(:,:) 	! CO2 production rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: co2_oxid_depth_unsat(:,:) 	! CO2 production rate via oxidation in each soil layer (mol/m3/s) (nlevsoi)
+   real(r8), pointer :: conc_o2_sat(:,:)        		! O2 conc in each soil layer (mol/m3) (nlevsoi)
+   real(r8), pointer :: conc_o2_unsat(:,:)       		! O2 conc in each soil layer (mol/m3) (nlevsoi)
+   real(r8), pointer :: conc_o2_lake(:,:)        		! O2 conc in each soil layer (mol/m3) (nlevsoi)
+   real(r8), pointer :: conc_ch4_sat(:,:)       		! CH4 conc in each soil layer (mol/m3) (nlevsoi)
+   real(r8), pointer :: conc_ch4_unsat(:,:)       	! CH4 conc in each soil layer (mol/m3) (nlevsoi)
+   real(r8), pointer :: conc_ch4_lake(:,:)      		! CH4 conc in each soil layer (mol/m3) (nlevsoi)
+   real(r8), pointer :: ch4_surf_diff_sat(:)    		! CH4 surface flux (mol/m2/s)
+   real(r8), pointer :: ch4_surf_diff_unsat(:)    	! CH4 surface flux (mol/m2/s)
+   real(r8), pointer :: ch4_surf_diff_lake(:)   		! CH4 surface flux (mol/m2/s)
+   real(r8), pointer :: ch4_dfsat_flux(:)       		! CH4 flux to atm due to decreasing fsat (kg C/m^2/s) [+]
    ! Other variables
-   real(r8), pointer :: zwt_ch4_unsat(:) ! depth of water table for unsaturated fraction (m)
-   real(r8), pointer :: fsat_bef(:)    !fsat from previous timestep
-   real(r8), pointer :: lake_soilc(:,:)      ! total soil organic matter found in level (g C / m^3) (nlevsoi)
-   real(r8), pointer :: lake_raw(:)        !aerodynamic resistance for moisture (s/m)
-   real(r8), pointer :: totcolch4(:)       ! total methane found in soil column (g C / m^2)
-   real(r8), pointer :: fphr(:,:)         ! fraction of potential heterotrophic respiration
-   real(r8), pointer :: annsum_counter(:)     ! seconds since last annual accumulator turnover
-   real(r8), pointer :: tempavg_somhr(:)         ! temporary average SOM heterotrophic resp. (gC/m2/s)
-   real(r8), pointer :: annavg_somhr(:)          ! annual average SOM heterotrophic resp. (gC/m2/s)
-   real(r8), pointer :: tempavg_finrw(:)    ! respiration-weighted annual average of finundated
-   real(r8), pointer :: annavg_finrw(:)    ! respiration-weighted annual average of finundated
-   real(r8), pointer :: sif(:) ! (unitless) ratio applied to sat. prod. to account for seasonal inundation
-   real(r8), pointer :: o2stress_unsat(:,:) ! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
-   real(r8), pointer :: o2stress_sat(:,:) ! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
-   real(r8), pointer :: ch4stress_unsat(:,:) ! Ratio of methane available to the total per-timestep methane sinks (nlevsoi)
-   real(r8), pointer :: ch4stress_sat(:,:) ! Ratio of methane available to the total per-timestep methane sinks (nlevsoi)
-   real(r8), pointer :: qflx_surf_lag(:)	! time-lagged surface runoff (mm H2O /s)
-   real(r8), pointer :: finundated_lag(:)       ! time-lagged fractional inundated area
-   real(r8), pointer :: layer_sat_lag(:,:) ! Lagged saturation status of soil layer in the unsaturated zone (1 = sat)
+   real(r8), pointer :: zwt_ch4_unsat(:) 			! depth of water table for unsaturated fraction (m)
+   real(r8), pointer :: fsat_bef(:)    				!fsat from previous timestep
+   real(r8), pointer :: lake_soilc(:,:)      			! total soil organic matter found in level (g C / m^3) (nlevsoi)
+   real(r8), pointer :: lake_raw(:)        			! aerodynamic resistance for moisture (s/m)
+   real(r8), pointer :: totcolch4(:)       			! total methane found in soil column (g C / m^2)
+   real(r8), pointer :: fphr(:,:)         			! fraction of potential heterotrophic respiration
+   real(r8), pointer :: annsum_counter(:)     		! seconds since last annual accumulator turnover
+   real(r8), pointer :: tempavg_somhr(:)         	! temporary average SOM heterotrophic resp. (gC/m2/s)
+   real(r8), pointer :: annavg_somhr(:)          		! annual average SOM heterotrophic resp. (gC/m2/s)
+   real(r8), pointer :: tempavg_finrw(:)    		! respiration-weighted annual average of finundated
+   real(r8), pointer :: annavg_finrw(:)    			! respiration-weighted annual average of finundated
+   real(r8), pointer :: sif(:) 					! (unitless) ratio applied to sat. prod. to account for seasonal inundation
+   real(r8), pointer :: o2stress_unsat(:,:) 		! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
+   real(r8), pointer :: o2stress_sat(:,:) 			! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
+   real(r8), pointer :: ch4stress_unsat(:,:) 		! Ratio of methane available to the total per-timestep methane sinks (nlevsoi)
+   real(r8), pointer :: ch4stress_sat(:,:) 			! Ratio of methane available to the total per-timestep methane sinks (nlevsoi)
+   real(r8), pointer :: qflx_surf_lag(:)			! time-lagged surface runoff (mm H2O /s)
+   real(r8), pointer :: finundated_lag(:)       		! time-lagged fractional inundated area
+   real(r8), pointer :: layer_sat_lag(:,:)			! Lagged saturation status of soil layer in the unsaturated zone (1 = sat)
 end type column_ch4_type
 
 type(column_ch4_type)   :: cch4      !column CH4 variables
@@ -1723,6 +1750,10 @@ type, public :: column_microbe_type
    real(r8), pointer :: caces_unsat_prod(:,:)			! column-level acetate in unsaturated fraction      
    real(r8), pointer :: caces_sat_prod(:,:)			! column-level acetate in saturated fraction        
 
+   real(r8), pointer :: caces_prod_h2(:,:)                      	! column-level acetogenesis
+   real(r8), pointer :: caces_unsat_prod_h2(:,:)			! column-level acetogenesis in unsaturated fraction      
+   real(r8), pointer :: caces_sat_prod_h2(:,:)			! column-level acetogenesis in saturated fraction        
+
 ! we set it as part of fine root respiration
    real(r8), Pointer :: cn_microbe(:,:)
    
@@ -1741,7 +1772,7 @@ type, public :: column_microbe_type
     
    real(r8), pointer :: ch4_dfsat_flux(:)			! CH4 flux to atm due to decreasing fsat (kg C/m^2/s) [+]
    real(r8), pointer :: waterhead_unsat(:) 		! depth of water table for unsaturated fraction (m)
-   real(r8), pointer :: fsat_pre(:)    				!fsat from previous timestep
+   real(r8), pointer :: fsat_pre(:)    			!fsat from previous timestep
 
 !   real(r8), pointer :: totcolch4(:)       ! total methane found in soil column (g C / m^2)
 !   real(r8), pointer :: fphr(:,:)         ! fraction of potential heterotrophic respiration
@@ -1751,137 +1782,139 @@ type, public :: column_microbe_type
    real(r8), pointer :: tempavg_finrw(:)    		! respiration-weighted annual average of finundated
    real(r8), pointer :: annavg_finrw(:)   			! respiration-weighted annual average of finundated
    
-   real(r8), pointer :: bgnpp_timestep(:)          ! (gC/m2/s) temp. average belowground NPP
-   real(r8), pointer :: bgnpp_avg(:)          ! (gC/m2/s) temp. average belowground NPP
-!   real(r8), pointer :: sif(:) ! (unitless) ratio applied to sat. prod. to account for seasonal inundation
-!   real(r8), pointer :: o2stress_unsat(:,:) ! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
-!   real(r8), pointer :: o2stress_sat(:,:) ! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
-!   real(r8), pointer :: ch4stress_unsat(:,:) ! Ratio of methane available to the total per-timestep methane sinks (nlevsoi)
-!   real(r8), pointer :: ch4stress_sat(:,:) ! Ratio of methane available to the total per-timestep methane sinks (nlevsoi)
-!   real(r8), pointer :: qflx_surf_lag(:)	! time-lagged surface runoff (mm H2O /s)
-!   real(r8), pointer :: finundated_lag(:)       ! time-lagged fractional inundated area
-!   real(r8), pointer :: layer_sat_lag(:,:) ! Lagged saturation status of soil layer in the unsaturated zone (1 = sat)
+   real(r8), pointer :: bgnpp_timestep(:)          	! (gC/m2/s) temp. average belowground NPP
+   real(r8), pointer :: bgnpp_avg(:)          		! (gC/m2/s) temp. average belowground NPP
+!   real(r8), pointer :: sif(:) 						! (unitless) ratio applied to sat. prod. to account for seasonal inundation
+!   real(r8), pointer :: o2stress_unsat(:,:) 				! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
+!   real(r8), pointer :: o2stress_sat(:,:) 				! Ratio of oxygen available to that demanded by roots, aerobes, & methanotrophs (nlevsoi)
+!   real(r8), pointer :: ch4stress_unsat(:,:) 			! Ratio of methane available to the total per-timestep methane sinks (nlevsoi)
+!   real(r8), pointer :: ch4stress_sat(:,:) 				! Ratio of methane available to the total per-timestep methane sinks (nlevsoi)
+!   real(r8), pointer :: qflx_surf_lag(:)				! time-lagged surface runoff (mm H2O /s)
+!   real(r8), pointer :: finundated_lag(:)       			! time-lagged fractional inundated area
+!   real(r8), pointer :: layer_sat_lag(:,:) 				! Lagged saturation status of soil layer in the unsaturated zone (1 = sat)
 
-	real(r8), pointer :: ch4_prod_ace_depth_unsat(:,:)
-	real(r8), pointer :: ch4_prod_co2_depth_unsat(:,:)
-	real(r8), pointer :: ch4_oxid_o2_depth_unsat(:,:)
-	real(r8), pointer :: ch4_oxid_aom_depth_unsat(:,:)
-	real(r8), pointer :: ch4_aere_depth_unsat(:,:)
-	real(r8), pointer :: ch4_dif_depth_unsat(:,:)
-	real(r8), pointer :: ch4_ebul_depth_unsat(:,:)
-	real(r8), pointer :: co2_prod_ace_depth_unsat(:,:)
-	real(r8), pointer :: co2_decomp_depth_unsat(:,:)
-	real(r8), pointer :: co2_cons_depth_unsat(:,:)
-	real(r8), pointer :: co2_ebul_depth_unsat(:,:)
-	real(r8), pointer :: co2_aere_depth_unsat(:,:)
-	real(r8), pointer :: co2_dif_depth_unsat(:,:)
-	real(r8), pointer :: o2_cons_depth_unsat(:,:)
-	real(r8), pointer :: o2_aere_depth_unsat(:,:)
-	real(r8), pointer :: o2_aere_oxid_depth_unsat(:,:)
-	real(r8), pointer :: o2_decomp_depth_unsat(:,:)
-	real(r8), pointer :: o2_dif_depth_unsat(:,:)
-	real(r8), pointer :: h2_prod_depth_unsat(:,:)
-	real(r8), pointer :: h2_cons_depth_unsat(:,:)
-	real(r8), pointer :: h2_aere_depth_unsat(:,:)
-	real(r8), pointer :: h2_diff_depth_unsat(:,:)
-	real(r8), pointer :: h2_ebul_depth_unsat(:,:)
-	real(r8), pointer :: ch4_surf_aere_unsat(:)
-	real(r8), pointer :: ch4_surf_ebul_unsat(:)
-	real(r8), pointer :: ch4_surf_dif_unsat(:)
-	real(r8), pointer :: ch4_surf_netflux_unsat(:)
-	real(r8), pointer :: co2_surf_aere_unsat(:)
-	real(r8), pointer :: co2_surf_ebul_unsat(:)
-	real(r8), pointer :: co2_surf_dif_unsat(:)
-	real(r8), pointer :: co2_surf_netflux_unsat(:)
-	real(r8), pointer :: o2_surf_aere_unsat(:)
-	real(r8), pointer :: o2_surf_dif_unsat(:)
-	real(r8), pointer :: o2_surf_netflux_unsat(:)
-	real(r8), pointer :: h2_surf_aere_unsat(:)
-	real(r8), pointer :: h2_surf_ebul_unsat(:)
-	real(r8), pointer :: h2_surf_dif_unsat(:)
-	real(r8), pointer :: h2_surf_netflux_unsat(:)
+	real(r8), pointer :: ch4_prod_ace_depth_unsat(:,:)	! ch4 production of acecaltic methanonnesis ion status of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_prod_co2_depth_unsat(:,:)	! hydrogenotrophic methanogenesis of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_oxid_o2_depth_unsat(:,:)	! oxic methanotroph of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_oxid_aom_depth_unsat(:,:)	! AOM of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_aere_depth_unsat(:,:)	! CH4 plant-mediated transprot of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_dif_depth_unsat(:,:)		! CH4 diffusion transport of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_ebul_depth_unsat(:,:)	! CH4 ebulition of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_prod_ace_depth_unsat(:,:)	! CO2 prouction from acetate of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_decomp_depth_unsat(:,:)	! CO2 production from SOM decomposition of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_cons_depth_unsat(:,:)	! CO2 concentration in soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_ebul_depth_unsat(:,:)		! CO2 ebulition of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_aere_depth_unsat(:,:)	! CO2 plant-mediated transprot of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_dif_depth_unsat(:,:)		! CO2 diffusion transport of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: o2_cons_depth_unsat(:,:)		! O2 concentration of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: o2_aere_depth_unsat(:,:)		! O2 plant-mediated trasnport of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: o2_aere_oxid_depth_unsat(:,:)	! O2 used for methane oxidaiton during plant-mediated transport of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: o2_decomp_depth_unsat(:,:)	! O2 consumed for SOM decomositon of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: o2_dif_depth_unsat(:,:)		! O2 diffusion of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_prod_depth_unsat(:,:)		! H2 production of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_cons_depth_unsat(:,:)		! H2 concentration of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_aere_depth_unsat(:,:)		! H2 plant-mediated transport of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_diff_depth_unsat(:,:)		! H2 diffusion transport of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_ebul_depth_unsat(:,:)		! H2 ebulition transport of soil layer in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_surf_aere_unsat(:)		! CH4 plant-mediated transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_surf_ebul_unsat(:)		! CH4 ebulition transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_surf_dif_unsat(:)		! CH4 diffusion transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: ch4_surf_netflux_unsat(:)		! net CH4 flux at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_surf_aere_unsat(:)		! CO2 plant-mediated transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_surf_ebul_unsat(:)		! CO2 ebulition transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_surf_dif_unsat(:)		! CO2 diffusion transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: co2_surf_netflux_unsat(:)		! net CO2 flux at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: o2_surf_aere_unsat(:)		! O2 plant-mediated transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: o2_surf_dif_unsat(:)			! O2 diffusion transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: o2_surf_netflux_unsat(:)		! net O2 flux at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_surf_aere_unsat(:)		! H2 plant-mediated transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_surf_ebul_unsat(:)		! H2 ebulition transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_surf_dif_unsat(:)			! H2 diffusion transport at surface in the unsaturated zone (1 = sat)
+	real(r8), pointer :: h2_surf_netflux_unsat(:)		! net H2 flux at surface in the unsaturated zone (1 = sat)
 
-	real(r8), pointer :: ch4_prod_ace_depth_sat(:,:)
-	real(r8), pointer :: ch4_prod_co2_depth_sat(:,:)
-	real(r8), pointer :: ch4_oxid_o2_depth_sat(:,:)
-	real(r8), pointer :: ch4_oxid_aom_depth_sat(:,:)
-	real(r8), pointer :: ch4_aere_depth_sat(:,:)
-	real(r8), pointer :: ch4_dif_depth_sat(:,:)
-	real(r8), pointer :: ch4_ebul_depth_sat(:,:)
-	real(r8), pointer :: co2_prod_ace_depth_sat(:,:)
-	real(r8), pointer :: co2_decomp_depth_sat(:,:)
-	real(r8), pointer :: co2_cons_depth_sat(:,:)
-	real(r8), pointer :: co2_ebul_depth_sat(:,:)
-	real(r8), pointer :: co2_aere_depth_sat(:,:)
-	real(r8), pointer :: co2_dif_depth_sat(:,:)
-	real(r8), pointer :: o2_cons_depth_sat(:,:)
-	real(r8), pointer :: o2_aere_depth_sat(:,:)
-	real(r8), pointer :: o2_aere_oxid_depth_sat(:,:)
-	real(r8), pointer :: o2_decomp_depth_sat(:,:)
-	real(r8), pointer :: o2_dif_depth_sat(:,:)
-	real(r8), pointer :: h2_prod_depth_sat(:,:)
-	real(r8), pointer :: h2_cons_depth_sat(:,:)
-	real(r8), pointer :: h2_aere_depth_sat(:,:)
-	real(r8), pointer :: h2_diff_depth_sat(:,:)
-	real(r8), pointer :: h2_ebul_depth_sat(:,:)
-	real(r8), pointer :: ch4_surf_aere_sat(:)
-	real(r8), pointer :: ch4_surf_ebul_sat(:)
-	real(r8), pointer :: ch4_surf_dif_sat(:)
-	real(r8), pointer :: ch4_surf_netflux_sat(:)
-	real(r8), pointer :: co2_surf_aere_sat(:)
-	real(r8), pointer :: co2_surf_ebul_sat(:)
-	real(r8), pointer :: co2_surf_dif_sat(:)
-	real(r8), pointer :: co2_surf_netflux_sat(:)
-	real(r8), pointer :: o2_surf_aere_sat(:)
-	real(r8), pointer :: o2_surf_dif_sat(:)
-	real(r8), pointer :: o2_surf_netflux_sat(:)
-	real(r8), pointer :: h2_surf_aere_sat(:)
-	real(r8), pointer :: h2_surf_ebul_sat(:)
-	real(r8), pointer :: h2_surf_dif_sat(:)
-	real(r8), pointer :: h2_surf_netflux_sat(:)
+	real(r8), pointer :: ch4_prod_ace_depth_sat(:,:)	! ch4 production of acecaltic methanonnesis ion status of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_prod_co2_depth_sat(:,:)	! hydrogenotrophic methanogenesis of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_oxid_o2_depth_sat(:,:)	! oxic methanotroph of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_oxid_aom_depth_sat(:,:)	! AOM of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_aere_depth_sat(:,:)		! CH4 plant-mediated transprot of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_dif_depth_sat(:,:)		! CH4 diffusion transport of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_ebul_depth_sat(:,:)		! CH4 ebulition of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_prod_ace_depth_sat(:,:)	! CO2 prouction from acetate of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_decomp_depth_sat(:,:)	! CO2 production from SOM decomposition of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_cons_depth_sat(:,:)		! CO2 concentration in soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_ebul_depth_sat(:,:)		! CO2 ebulition of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_aere_depth_sat(:,:)		! CO2 plant-mediated transprot of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_dif_depth_sat(:,:)		! CO2 diffusion transport of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: o2_cons_depth_sat(:,:)		! O2 concentration of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: o2_aere_depth_sat(:,:)		! O2 plant-mediated trasnport of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: o2_aere_oxid_depth_sat(:,:)	! O2 used for methane oxidaiton during plant-mediated transport of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: o2_decomp_depth_sat(:,:)	! O2 consumed for SOM decomositon of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: o2_dif_depth_sat(:,:)		! O2 diffusion of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_prod_depth_sat(:,:)		! H2 production of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_cons_depth_sat(:,:)		! H2 concentration of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_aere_depth_sat(:,:)		! H2 plant-mediated transport of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_diff_depth_sat(:,:)		! H2 diffusion transport of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_ebul_depth_sat(:,:)		! H2 ebulition transport of soil layer in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_surf_aere_sat(:)			! CH4 plant-mediated transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_surf_ebul_sat(:)			! CH4 ebulition transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_surf_dif_sat(:)			! CH4 diffusion transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: ch4_surf_netflux_sat(:)		! net CH4 flux at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_surf_aere_sat(:)			! CO2 plant-mediated transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_surf_ebul_sat(:)			! CO2 ebulition transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_surf_dif_sat(:)			! CO2 diffusion transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: co2_surf_netflux_sat(:)		! net CO2 flux at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: o2_surf_aere_sat(:)			! O2 plant-mediated transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: o2_surf_dif_sat(:)			! O2 diffusion transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: o2_surf_netflux_sat(:)		! net O2 flux at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_surf_aere_sat(:)			! H2 plant-mediated transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_surf_ebul_sat(:)			! H2 ebulition transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_surf_dif_sat(:)			! H2 diffusion transport at surface in the saturated zone (1 = sat)
+	real(r8), pointer :: h2_surf_netflux_sat(:)		! net H2 flux at surface in the saturated zone (1 = sat)
 
-
-	real(r8), pointer :: ch4_prod_ace_depth(:,:)
-	real(r8), pointer :: ch4_prod_co2_depth(:,:)
-	real(r8), pointer :: ch4_oxid_o2_depth(:,:)
-	real(r8), pointer :: ch4_oxid_aom_depth(:,:)
-	real(r8), pointer :: ch4_aere_depth(:,:)
-	real(r8), pointer :: ch4_dif_depth(:,:)
-	real(r8), pointer :: ch4_ebul_depth(:,:)
-	real(r8), pointer :: co2_prod_ace_depth(:,:)
-	real(r8), pointer :: co2_decomp_depth(:,:)
-	real(r8), pointer :: co2_cons_depth(:,:)
-	real(r8), pointer :: co2_ebul_depth(:,:)
-	real(r8), pointer :: co2_aere_depth(:,:)
-	real(r8), pointer :: co2_dif_depth(:,:)
-	real(r8), pointer :: o2_cons_depth(:,:)
-	real(r8), pointer :: o2_aere_depth(:,:)
-	real(r8), pointer :: o2_aere_oxid_depth(:,:)
-	real(r8), pointer :: o2_decomp_depth(:,:)
-	real(r8), pointer :: o2_dif_depth(:,:)
-	real(r8), pointer :: h2_prod_depth(:,:)
-	real(r8), pointer :: h2_cons_depth(:,:)
-	real(r8), pointer :: h2_aere_depth(:,:)
-	real(r8), pointer :: h2_diff_depth(:,:)
-	real(r8), pointer :: h2_ebul_depth(:,:)
-	real(r8), pointer :: ch4_surf_aere(:)
-	real(r8), pointer :: ch4_surf_ebul(:)
-	real(r8), pointer :: ch4_surf_dif(:)
-	real(r8), pointer :: ch4_surf_netflux(:)
-	real(r8), pointer :: co2_surf_aere(:)
-	real(r8), pointer :: co2_surf_ebul(:)
-	real(r8), pointer :: co2_surf_dif(:)
-	real(r8), pointer :: co2_surf_netflux(:)
-	real(r8), pointer :: o2_surf_aere(:)
-	real(r8), pointer :: o2_surf_dif(:)
-	real(r8), pointer :: o2_surf_netflux(:)
-	real(r8), pointer :: h2_surf_aere(:)
-	real(r8), pointer :: h2_surf_ebul(:)
-	real(r8), pointer :: h2_surf_dif(:)
-	real(r8), pointer :: h2_surf_netflux(:)
+	real(r8), pointer :: ch4_prod_ace_depth(:,:)		! ch4 production of acecaltic methanonnesis ion status of soil layer
+	real(r8), pointer :: ch4_prod_co2_depth(:,:)		! hydrogenotrophic methanogenesis of soil layer
+	real(r8), pointer :: ch4_oxid_o2_depth(:,:)		! oxic methanotroph of soil layer
+	real(r8), pointer :: ch4_oxid_aom_depth(:,:)		! AOM of soil layer
+	real(r8), pointer :: ch4_aere_depth(:,:)			! CH4 plant-mediated transprot of soil layer
+	real(r8), pointer :: ch4_dif_depth(:,:)			! CH4 diffusion transport of soil layer
+	real(r8), pointer :: ch4_ebul_depth(:,:)			! CH4 ebulition of soil layer 
+	real(r8), pointer :: co2_prod_ace_depth(:,:)		! CO2 prouction from acetate of soil layer 
+	real(r8), pointer :: co2_decomp_depth(:,:)		! CO2 production from SOM decomposition of soil layer
+	real(r8), pointer :: co2_cons_depth(:,:)			! CO2 concentration in soil layer
+	real(r8), pointer :: co2_ebul_depth(:,:)			! CO2 ebulition of soil layer  
+	real(r8), pointer :: co2_aere_depth(:,:)			! CO2 plant-mediated transprot of soil layer
+	real(r8), pointer :: co2_dif_depth(:,:)			! CO2 diffusion transport of soil layer 
+	real(r8), pointer :: o2_cons_depth(:,:)			! O2 concentration of soil layer 
+	real(r8), pointer :: o2_aere_depth(:,:)			! O2 plant-mediated trasnport of soil layer
+	real(r8), pointer :: o2_aere_oxid_depth(:,:)		! O2 used for methane oxidaiton during plant-mediated transport of soil layer
+	real(r8), pointer :: o2_decomp_depth(:,:)		! O2 consumed for SOM decomositon of soil layer i 
+	real(r8), pointer :: o2_dif_depth(:,:)			! O2 diffusion of soil layer 
+	real(r8), pointer :: h2_prod_depth(:,:)			! H2 production of soil layer 
+	real(r8), pointer :: h2_cons_depth(:,:)			! H2 concentration of soil layer 
+	real(r8), pointer :: h2_aere_depth(:,:)			! H2 plant-mediated transport of soil layer 
+	real(r8), pointer :: h2_diff_depth(:,:)			! H2 diffusion transport of soil layer
+	real(r8), pointer :: h2_ebul_depth(:,:)			! H2 ebulition transport of soil layer 
+	real(r8), pointer :: ch4_surf_aere(:)			! CH4 plant-mediated transport at surface
+	real(r8), pointer :: ch4_surf_ebul(:)			! CH4 ebulition transport at surface 
+	real(r8), pointer :: ch4_surf_dif(:)				! CH4 diffusion transport at surface
+	real(r8), pointer :: ch4_surf_netflux(:)			! net CH4 flux at surface
+	real(r8), pointer :: co2_surf_aere(:)			! CO2 plant-mediated transport at surface 
+	real(r8), pointer :: co2_surf_ebul(:)			! CO2 ebulition transport at surface
+	real(r8), pointer :: co2_surf_dif(:)				! CO2 diffusion transport at surface
+	real(r8), pointer :: co2_surf_netflux(:)			! net CO2 flux at surface 
+	real(r8), pointer :: o2_surf_aere(:)			! O2 plant-mediated transport at surface 
+	real(r8), pointer :: o2_surf_dif(:)				! O2 diffusion transport at surface
+	real(r8), pointer :: o2_surf_netflux(:)			! net O2 flux at surface 
+	real(r8), pointer :: h2_surf_aere(:)			! H2 plant-mediated transport at surface
+	real(r8), pointer :: h2_surf_ebul(:)			! H2 ebulition transport at surface
+	real(r8), pointer :: h2_surf_dif(:)				! H2 diffusion transport at surface
+	real(r8), pointer :: h2_surf_netflux(:)			! et H2 flux at surface 
 	
 end type column_microbe_type
-type(column_microbe_type) :: cmic
+
+type(column_microbe_type), TARGET :: cmic
+type(column_microbe_type), TARGET :: cmicc13				! 13C for microbial variables at columne level 
+type(column_microbe_type), TARGET :: cmicc14				! 14C for microbial variables at columne level
 
 #endif
 
@@ -1917,7 +1950,7 @@ type, public :: column_nstate_type
    real(r8), pointer :: totcoln(:)                 ! (gN/m2) total column nitrogen, incl veg
 
 #ifdef MICROBE
-   real(r8), pointer :: micbion_col(:)			! (gN/m2) total column nitrogen in microbial biomass 
+   real(r8), pointer :: micbion_col(:)		! (gN/m2) total column nitrogen in microbial biomass 
    real(r8), pointer :: don_col(:)			! (gN/m2) total column dissolved organic nitrogen
 #endif  
 end type column_nstate_type
@@ -1978,56 +2011,56 @@ end type column_mflux_type
 ! column water flux variables structure
 !----------------------------------------------------
 type, public :: column_wflux_type
-   real(r8), pointer :: qflx_infl(:)	! infiltration (mm H2O /s)
-   real(r8), pointer :: qflx_surf(:)	! surface runoff (mm H2O /s)
-   real(r8), pointer :: qflx_drain(:) 	! sub-surface runoff (mm H2O /s)
-   real(r8), pointer :: qflx_top_soil(:)! net water input into soil from top (mm/s)
-   real(r8), pointer :: qflx_h2osfc_to_ice(:) ! conversion of h2osfc to ice
-   real(r8), pointer :: qflx_h2osfc_surf(:)   !surface water runoff
-   real(r8), pointer :: qflx_snow_h2osfc(:)   !snow falling on surface water
-   real(r8), pointer :: qflx_drain_perched(:) ! sub-surface runoff from perched wt (mm H2O /s)
-   real(r8), pointer :: qflx_floodc(:) 	      ! flood water flux at column level
-   real(r8), pointer :: qflx_sl_top_soil(:)   ! liquid water + ice from layer above soil to top soil layer or sent to qflx_qrgwl (mm H2O/s)
-   real(r8), pointer :: qflx_snomelt(:)       ! snow melt (mm H2O /s)
-   real(r8), pointer :: qflx_snow_melt(:)     ! snow melt (net)
-   real(r8), pointer :: qflx_qrgwl(:) 	    ! qflx_surf at glaciers, wetlands, lakes
-   real(r8), pointer :: qflx_runoff(:) 	    ! total runoff (qflx_drain+qflx_surf+qflx_qrgwl) (mm H2O /s)
-   real(r8), pointer :: qflx_runoff_u(:)    ! Urban total runoff (qflx_drain+qflx_surf) (mm H2O /s)
-   real(r8), pointer :: qflx_runoff_r(:)    ! Rural total runoff (qflx_drain+qflx_surf+qflx_qrgwl) (mm H2O /s)
-   real(r8), pointer :: qmelt(:) 	    ! snow melt [mm/s]
-   real(r8), pointer :: h2ocan_loss(:)      ! mass balance correction term for dynamic weights
-   real(r8), pointer :: qflx_rsub_sat(:)    ! soil saturation excess [mm/s]
-   real(r8), pointer :: flx_bc_dep_dry(:)   ! dry (BCPHO+BCPHI) BC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_bc_dep_wet(:)   ! wet (BCPHI) BC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_bc_dep_pho(:)   ! hydrophobic BC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_bc_dep_phi(:)   ! hydrophillic BC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_bc_dep(:)       ! total (dry+wet) BC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_oc_dep_dry(:)   ! dry (OCPHO+OCPHI) OC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_oc_dep_wet(:)   ! wet (OCPHI) OC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_oc_dep_pho(:)   ! hydrophobic OC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_oc_dep_phi(:)   ! hydrophillic OC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_oc_dep(:)       ! total (dry+wet) OC deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep_dry1(:) ! dust species 1 dry deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep_wet1(:) ! dust species 1 wet deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep_dry2(:) ! dust species 2 dry deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep_wet2(:) ! dust species 2 wet deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep_dry3(:) ! dust species 3 dry deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep_wet3(:) ! dust species 3 wet deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep_dry4(:) ! dust species 4 dry deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep_wet4(:) ! dust species 4 wet deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: flx_dst_dep(:)      ! total (dry+wet) dust deposition on ground (positive definite) (col) [kg/s]
-   real(r8), pointer :: qflx_snofrz_lyr(:,:)! snow freezing rate (positive definite) (col,lyr) [kg m-2 s-1]
-   real(r8), pointer :: qflx_snofrz_col(:)  ! column-integrated snow freezing rate (positive definite) (col) [kg m-2 s-1]
-   real(r8), pointer :: qflx_irrig(:)     !irrigation flux (mm H2O/s)
-   real(r8), pointer :: qflx_glcice(:)      ! net flux of new glacial ice (growth - melt) (mm H2O/s), passed to GLC
-   real(r8), pointer :: qflx_glcice_frz(:)  ! ice growth (positive definite) (mm H2O/s)
-   real(r8), pointer :: qflx_glcice_melt(:) ! ice melt (positive definite) (mm H2O/s)
-   real(r8), pointer :: glc_rofi(:)         ! ice runoff passed from GLC to CLM (mm H2O /s)
-   real(r8), pointer :: glc_rofl(:)         ! liquid runoff passed from GLC to CLM (mm H2O /s)
+   real(r8), pointer :: qflx_infl(:)			! infiltration (mm H2O /s)
+   real(r8), pointer :: qflx_surf(:)			! surface runoff (mm H2O /s)
+   real(r8), pointer :: qflx_drain(:) 			! sub-surface runoff (mm H2O /s)
+   real(r8), pointer :: qflx_top_soil(:)		! net water input into soil from top (mm/s)
+   real(r8), pointer :: qflx_h2osfc_to_ice(:) 	! conversion of h2osfc to ice
+   real(r8), pointer :: qflx_h2osfc_surf(:)   	! surface water runoff
+   real(r8), pointer :: qflx_snow_h2osfc(:)   	! snow falling on surface water
+   real(r8), pointer :: qflx_drain_perched(:) 	! sub-surface runoff from perched wt (mm H2O /s)
+   real(r8), pointer :: qflx_floodc(:) 	      	! flood water flux at column level
+   real(r8), pointer :: qflx_sl_top_soil(:)   	! liquid water + ice from layer above soil to top soil layer or sent to qflx_qrgwl (mm H2O/s)
+   real(r8), pointer :: qflx_snomelt(:)       	! snow melt (mm H2O /s)
+   real(r8), pointer :: qflx_snow_melt(:)     	! snow melt (net)
+   real(r8), pointer :: qflx_qrgwl(:) 	    	! qflx_surf at glaciers, wetlands, lakes
+   real(r8), pointer :: qflx_runoff(:) 	    	! total runoff (qflx_drain+qflx_surf+qflx_qrgwl) (mm H2O /s)
+   real(r8), pointer :: qflx_runoff_u(:)    		! Urban total runoff (qflx_drain+qflx_surf) (mm H2O /s)
+   real(r8), pointer :: qflx_runoff_r(:)    		! Rural total runoff (qflx_drain+qflx_surf+qflx_qrgwl) (mm H2O /s)
+   real(r8), pointer :: qmelt(:) 	   		! snow melt [mm/s]
+   real(r8), pointer :: h2ocan_loss(:)      		! mass balance correction term for dynamic weights
+   real(r8), pointer :: qflx_rsub_sat(:)    		! soil saturation excess [mm/s]
+   real(r8), pointer :: flx_bc_dep_dry(:)   	! dry (BCPHO+BCPHI) BC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_bc_dep_wet(:)   	! wet (BCPHI) BC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_bc_dep_pho(:)  	! hydrophobic BC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_bc_dep_phi(:)   	! hydrophillic BC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_bc_dep(:)       		! total (dry+wet) BC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_oc_dep_dry(:)   	! dry (OCPHO+OCPHI) OC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_oc_dep_wet(:)   	! wet (OCPHI) OC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_oc_dep_pho(:)   	! hydrophobic OC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_oc_dep_phi(:)   	! hydrophillic OC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_oc_dep(:)       		! total (dry+wet) OC deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep_dry1(:) 	! dust species 1 dry deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep_wet1(:) 	! dust species 1 wet deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep_dry2(:) 	! dust species 2 dry deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep_wet2(:) 	! dust species 2 wet deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep_dry3(:) 	! dust species 3 dry deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep_wet3(:) 	! dust species 3 wet deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep_dry4(:) 	! dust species 4 dry deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep_wet4(:)	! dust species 4 wet deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: flx_dst_dep(:)      		! total (dry+wet) dust deposition on ground (positive definite) (col) [kg/s]
+   real(r8), pointer :: qflx_snofrz_lyr(:,:)		! snow freezing rate (positive definite) (col,lyr) [kg m-2 s-1]
+   real(r8), pointer :: qflx_snofrz_col(:)  		! column-integrated snow freezing rate (positive definite) (col) [kg m-2 s-1]
+   real(r8), pointer :: qflx_irrig(:)     		! irrigation flux (mm H2O/s)
+   real(r8), pointer :: qflx_glcice(:)      		! net flux of new glacial ice (growth - melt) (mm H2O/s), passed to GLC
+   real(r8), pointer :: qflx_glcice_frz(:)  		! ice growth (positive definite) (mm H2O/s)
+   real(r8), pointer :: qflx_glcice_melt(:) 	! ice melt (positive definite) (mm H2O/s)
+   real(r8), pointer :: glc_rofi(:)         		! ice runoff passed from GLC to CLM (mm H2O /s)
+   real(r8), pointer :: glc_rofl(:)         		! liquid runoff passed from GLC to CLM (mm H2O /s)
    !HUM_HOL
-   real(r8), pointer :: qflx_surf_input(:)  !input to Hummock from hollow surface runoff
-   real(r8), pointer :: qflx_lat_aqu(:)     !Lateral transport between hummock and hollow aquifer
-   real(r8), pointer :: qflx_lat_aqu_layer(:,:)     !Lateral transport between hummock and hollow for each layer
+   real(r8), pointer :: qflx_surf_input(:)  		!input to Hummock from hollow surface runoff
+   real(r8), pointer :: qflx_lat_aqu(:)     		!Lateral transport between hummock and hollow aquifer
+   real(r8), pointer :: qflx_lat_aqu_layer(:,:)	!Lateral transport between hummock and hollow for each layer
 end type column_wflux_type
 
 type(column_wflux_type) :: cwf       ! column water flux
@@ -2038,37 +2071,47 @@ type(pft_wflux_type)    :: pwf_a     ! pft-level water flux variables averaged t
 !----------------------------------------------------
 type, public :: column_cflux_type
    ! phenology: litterfall and crop fluxes
-   real(r8), pointer :: phenology_c_to_litr_met_c(:,:)             ! C fluxes associated with phenology (litterfall and crop) to litter metabolic pool (gC/m3/s)
-   real(r8), pointer :: phenology_c_to_litr_cel_c(:,:)             ! C fluxes associated with phenology (litterfall and crop) to litter cellulose pool (gC/m3/s)
-   real(r8), pointer :: phenology_c_to_litr_lig_c(:,:)             ! C fluxes associated with phenology (litterfall and crop) to litter lignin pool (gC/m3/s)
+   real(r8), pointer :: phenology_c_to_litr_met_c(:,:)		! C fluxes associated with phenology (litterfall and crop) to litter metabolic pool (gC/m3/s)
+   real(r8), pointer :: phenology_c_to_litr_cel_c(:,:)             	! C fluxes associated with phenology (litterfall and crop) to litter cellulose pool (gC/m3/s)
+   real(r8), pointer :: phenology_c_to_litr_lig_c(:,:)             	! C fluxes associated with phenology (litterfall and crop) to litter lignin pool (gC/m3/s)
    ! gap mortality
 #if(defined MICROBE)
-   real(r8), pointer :: litter_c_to_doc(:,:)         ! C fluxes to doc (gC/m3/s)
-   real(r8), pointer :: mic_fco2_col(:)         ! C fluxes to doc (gC/m3/s)
-   real(r8), pointer :: mic_fch4_col(:)         ! C fluxes to doc (gC/m3/s)
+   real(r8), pointer :: litter_c_to_doc(:,:)         			! C fluxes to doc (gC/m3/s)
+   real(r8), pointer :: mic_fco2_col(:)         				! C fluxes to doc (gC/m3/s)
+   real(r8), pointer :: mic_fch4_col(:)         				! C fluxes to doc (gC/m3/s)
+
+!   real(r8), pointer :: litter_c_to_doc_c13(:,:)         			! C fluxes to doc in 13C (gC/m3/s)
+!   real(r8), pointer :: mic_fco2_col_c13(:)        			! C fluxes to doc in 13C (gC/m3/s)
+!   real(r8), pointer :: mic_fch4_col_c13(:)         			! C fluxes to doc in 13C (gC/m3/s)
+
+ !  real(r8), pointer :: litter_c_to_doc_c14(:,:)         			! C fluxes to doc in 14C (gC/m3/s)
+ !  real(r8), pointer :: mic_fco2_col_c14(:)        			! C fluxes to doc in 14C (gC/m3/s)
+ !  real(r8), pointer :: mic_fch4_col_c14(:)         			! C fluxes to doc in 14C (gC/m3/s)
+
 #endif
-   real(r8), pointer :: gap_mortality_c_to_litr_met_c(:,:)         ! C fluxes associated with gap mortality to litter metabolic pool (gC/m3/s)
-   real(r8), pointer :: gap_mortality_c_to_litr_cel_c(:,:)         ! C fluxes associated with gap mortality to litter cellulose pool (gC/m3/s)
-   real(r8), pointer :: gap_mortality_c_to_litr_lig_c(:,:)         ! C fluxes associated with gap mortality to litter lignin pool (gC/m3/s)
-   real(r8), pointer :: gap_mortality_c_to_cwdc(:,:)               ! C fluxes associated with gap mortality to CWD pool (gC/m3/s)
+
+   real(r8), pointer :: gap_mortality_c_to_litr_met_c(:,:)         	! C fluxes associated with gap mortality to litter metabolic pool (gC/m3/s)
+   real(r8), pointer :: gap_mortality_c_to_litr_cel_c(:,:)         	! C fluxes associated with gap mortality to litter cellulose pool (gC/m3/s)
+   real(r8), pointer :: gap_mortality_c_to_litr_lig_c(:,:)         	! C fluxes associated with gap mortality to litter lignin pool (gC/m3/s)
+   real(r8), pointer :: gap_mortality_c_to_cwdc(:,:)               	! C fluxes associated with gap mortality to CWD pool (gC/m3/s)
    ! fire
-   real(r8), pointer :: fire_mortality_c_to_cwdc(:,:)              ! C fluxes associated with fire mortality to CWD pool (gC/m3/s)
+   real(r8), pointer :: fire_mortality_c_to_cwdc(:,:)              	! C fluxes associated with fire mortality to CWD pool (gC/m3/s)
    ! harvest
-   real(r8), pointer :: harvest_c_to_litr_met_c(:,:)               ! C fluxes associated with harvest to litter metabolic pool (gC/m3/s)
-   real(r8), pointer :: harvest_c_to_litr_cel_c(:,:)               ! C fluxes associated with harvest to litter cellulose pool (gC/m3/s)
-   real(r8), pointer :: harvest_c_to_litr_lig_c(:,:)               ! C fluxes associated with harvest to litter lignin pool (gC/m3/s)
-   real(r8), pointer :: harvest_c_to_cwdc(:,:)                     ! C fluxes associated with harvest to CWD pool (gC/m3/s)
+   real(r8), pointer :: harvest_c_to_litr_met_c(:,:)               	! C fluxes associated with harvest to litter metabolic pool (gC/m3/s)
+   real(r8), pointer :: harvest_c_to_litr_cel_c(:,:)               	! C fluxes associated with harvest to litter cellulose pool (gC/m3/s)
+   real(r8), pointer :: harvest_c_to_litr_lig_c(:,:)               	! C fluxes associated with harvest to litter lignin pool (gC/m3/s)
+   real(r8), pointer :: harvest_c_to_cwdc(:,:)                     	! C fluxes associated with harvest to CWD pool (gC/m3/s)
    ! new variables for CN code
    real(r8), pointer :: hrv_deadstemc_to_prod10c(:)                ! dead stem C harvest mortality to 10-year product pool (gC/m2/s)        
-   real(r8), pointer :: hrv_deadstemc_to_prod100c(:)               ! dead stem C harvest mortality to 100-year product pool (gC/m2/s)        
+   real(r8), pointer :: hrv_deadstemc_to_prod100c(:)              ! dead stem C harvest mortality to 100-year product pool (gC/m2/s)        
    ! column-level fire fluxes
-   real(r8), pointer :: m_decomp_cpools_to_fire_vr(:,:,:)          ! vertically-resolved decomposing C fire loss (gC/m3/s)
-   real(r8), pointer :: m_decomp_cpools_to_fire(:,:)               ! vertically-integrated (diagnostic) decomposing C fire loss (gC/m2/s)
-   real(r8), pointer :: m_c_to_litr_met_fire(:,:)        ! C from leaf, froot, xfer and storage C to litter labile C by fire (gC/m3/s) 
-   real(r8), pointer :: m_c_to_litr_cel_fire(:,:)        ! C from leaf, froot, xfer and storage C to litter cellulose C by fire (gC/m3/s) 
-   real(r8), pointer :: m_c_to_litr_lig_fire(:,:)        ! C from leaf, froot, xfer and storage C to litter lignin C by fire (gC/m3/s) 
-   real(r8), pointer :: lf_conv_cflux(:)                ! (gC/m2/s) conversion C flux due to BET and BDT area decreasing (immediate loss to atm)
-   real(r8), pointer :: somc_fire(:)                     ! (gC/m2/s) carbon emissions due to peat burning
+   real(r8), pointer :: m_decomp_cpools_to_fire_vr(:,:,:)		! vertically-resolved decomposing C fire loss (gC/m3/s)
+   real(r8), pointer :: m_decomp_cpools_to_fire(:,:)               	! vertically-integrated (diagnostic) decomposing C fire loss (gC/m2/s)
+   real(r8), pointer :: m_c_to_litr_met_fire(:,:)        		! C from leaf, froot, xfer and storage C to litter labile C by fire (gC/m3/s) 
+   real(r8), pointer :: m_c_to_litr_cel_fire(:,:)        			! C from leaf, froot, xfer and storage C to litter cellulose C by fire (gC/m3/s) 
+   real(r8), pointer :: m_c_to_litr_lig_fire(:,:)        			! C from leaf, froot, xfer and storage C to litter lignin C by fire (gC/m3/s) 
+   real(r8), pointer :: lf_conv_cflux(:)                			! (gC/m2/s) conversion C flux due to BET and BDT area decreasing (immediate loss to atm)
+   real(r8), pointer :: somc_fire(:)                     			! (gC/m2/s) carbon emissions due to peat burning
 
    ! decomposition fluxes
    real(r8), pointer :: decomp_cascade_hr_vr(:,:,:)            ! vertically-resolved het. resp. from decomposing C pools (gC/m3/s)
@@ -2412,25 +2455,58 @@ type(gridcell_ch4_type)   :: gch4    !average of CH4 fluxes all landunits
 !----------------------------------------------------
 #ifdef MICROBE
 type, public :: gridcell_microbe_type
-   real(r8), pointer :: c_atm(:,:)     ! Atmospheric conc of CH4, O2, CO2 (mol/m3)
-   real(r8), pointer :: gch4prodf(:)   ! gridcell average CH4 production (g C/m^2/s)
+   real(r8), pointer :: c_atm(:,:)     	! Atmospheric conc of CH4, O2, CO2 (mol/m3)
+   real(r8), pointer :: gch4prodf(:)   	! gridcell average CH4 production (g C/m^2/s)
    real(r8), pointer :: gh2prodf(:)
-   real(r8), pointer :: gaerch4co2f(:)     ! gridcell CO2 production from CH4 oxidation (g C/m**2/s)
-   real(r8), pointer :: ganaerch4co2f(:)     ! gridcell CO2 production from CH4 oxidation (g C/m**2/s)
-   real(r8), pointer :: nee_ch4(:)          ! gridcell average net methane correction to CO2 flux (g C/m^2/s)
+   real(r8), pointer :: gaerch4co2f(:)     	! gridcell CO2 production from CH4 oxidation (g C/m**2/s)
+   real(r8), pointer :: ganaerch4co2f(:)	! gridcell CO2 production from CH4 oxidation (g C/m**2/s)
+   real(r8), pointer :: nee_ch4(:)          	! gridcell average net methane correction to CO2 flux (g C/m^2/s)
 !   real(r8), pointer :: gfunbios(:,:)
 !   real(r8), pointer :: gbacbios(:,:)
    
-   real(r8), pointer :: gmicbios(:)                     ! grid level microbial biomass carbon
-   real(r8), pointer :: gacebios(:)                     ! grid level methanogensis based on acetic acid
-   real(r8), pointer :: gco2bios(:)                     ! grid level methanogensis based on co2 reduction
-   real(r8), pointer :: gaerch4bios(:)                 ! aerobic oxidation of ch4
-   real(r8), pointer :: ganaerch4bios(:)             ! anaerobic oxidation of ch4
-   real(r8), pointer :: gaces(:)                          ! acetic acid available for methanogenesis
-   real(r8), pointer :: gdocs(:)                          ! available carbon for methanogenesis
+   real(r8), pointer :: gmicbios(:)           	! grid level microbial biomass carbon
+   real(r8), pointer :: gacebios(:)           	! grid level methanogensis based on acetic acid
+   real(r8), pointer :: gco2bios(:)          	! grid level methanogensis based on co2 reduction
+   real(r8), pointer :: gaerch4bios(:)       ! aerobic oxidation of ch4
+   real(r8), pointer :: ganaerch4bios(:)    ! anaerobic oxidation of ch4
+   real(r8), pointer :: gaces(:)               	! acetic acid available for methanogenesis
+   real(r8), pointer :: gdocs(:)              	! available carbon for methanogenesis
+
+!   real(r8), pointer :: gch4prodf_c13(:)   	! gridcell average 13CH4 production (g C/m^2/s)
+!   real(r8), pointer :: gaerch4co2f_c13(:)     	! gridcell CO2 production from 13CH4 oxidation (g C/m**2/s)
+!   real(r8), pointer :: ganaerch4co2f_c13(:)     ! gridcell CO2 production from 13CH4 oxidation (g C/m**2/s)
+!   real(r8), pointer :: nee_ch4_c13(:)          	! gridcell average net 13methane correction to CO2 flux (g C/m^2/s)
+!   real(r8), pointer :: gfunbios(:,:)
+!   real(r8), pointer :: gbacbios(:,:)
+   
+!   real(r8), pointer :: gmicbios_c13(:)                     ! grid level microbial biomass carbon in 13C
+!   real(r8), pointer :: gacebios_c13(:)                     ! grid level methanogensis based on acetic acid in 13C
+!   real(r8), pointer :: gco2bios_c13(:)                     ! grid level methanogensis based on co2 reduction in 13C
+!   real(r8), pointer :: gaerch4bios_c13(:)                 ! aerobic oxidation of 13CH4
+!   real(r8), pointer :: ganaerch4bios_c13(:)             ! anaerobic oxidation of 13CH4
+!   real(r8), pointer :: gaces_c13(:)                          ! acetic acid available for methanogenesis in 13C
+!   real(r8), pointer :: gdocs_c13(:)                          ! available carbon for methanogenesis in 13C
+
+!   real(r8), pointer :: gch4prodf_c14(:)   		! gridcell average 14CH4 production (g C/m^2/s)
+!   real(r8), pointer :: gaerch4co2f_c14(:)    		! gridcell CO2 production from 14CH4 oxidation (g C/m**2/s)
+!   real(r8), pointer :: ganaerch4co2f_c14(:)     	! gridcell CO2 production from 14CH4 oxidation (g C/m**2/s)
+!   real(r8), pointer :: nee_ch4_c14(:)          		! gridcell average net 14CH4 to CO2 flux (g C/m^2/s)
+!   real(r8), pointer :: gfunbios(:,:)
+!   real(r8), pointer :: gbacbios(:,:)
+   
+!   real(r8), pointer :: gmicbios_c14(:)                     ! grid level microbial biomass carbon in 14C
+!   real(r8), pointer :: gacebios_c14(:)                     ! grid level methanogensis based on acetic acid in 14C
+!   real(r8), pointer :: gco2bios_c14(:)                     ! grid level methanogensis based on co2 reduction in 14C
+!   real(r8), pointer :: gaerch4bios_c14(:)                 ! aerobic oxidation of 14CH4
+!   real(r8), pointer :: ganaerch4bios_c14(:)             ! anaerobic oxidation of 14CH4
+!   real(r8), pointer :: gace_c14s(:)                          ! acetic acid available for methanogenesis in 14C
+!   real(r8), pointer :: gdocs_c14(:)                          ! available carbon for methanogenesis in 14C
 
 end type gridcell_microbe_type
+
 type(gridcell_microbe_type) :: gmic
+type(gridcell_microbe_type) :: gmicc13			! 13C isotope for methane module
+type(gridcell_microbe_type) :: gmicc14			! place holder ofr c14
 #endif
 
 !----------------------------------------------------
